@@ -15,7 +15,7 @@
 %\AddToHook{cmd/section/before}{\clearpage}
 
 % emma's long list of custom macros and universally used packages
-\include{../lecture-notes/macros-and-packages.tex}
+\include{./macros-and-packages-en.tex}
 
 % colored box behind proofs
 \tcolorboxenvironment{proof}{
@@ -43,10 +43,7 @@
 	\tableofcontents
 	\thispagestyle{fancy}
 	\chapter{Sets and Orders}
-	\chapter{Algebraic Structures}
-		\section{Groups}
-		\section{Fields}
-		\section{Ordered Fields}
+	\chapter{Ordered Fields}
 		\iffalse
 		\begin{definition}
 			An \tbf{ordered commutative Ring} $(R,P)$ is a commutative Ring $K$ equipped with a set $P$ of \tbf{positive Elements}, such that:
@@ -101,7 +98,14 @@
 				1 \leq 1 + 1 \leq \sum_{i = 1}^p 1 = 0 \leq 1
 			\end{align*}
 		\end{proof}
-		\section{Vector Spaces}
+	\section{The Archimedean Property}
+	\section{On the Importance of the Real Numbers}
+		\begin{theorem}
+			Let $F$ be an arbitrary archimedean ordered field. Then $F$ is isomorphic to a subfield of the real number $\bR$.
+		\end{theorem}
+		\begin{theorem}
+			Let $F$ be an arbitrary ordered field. Then $F$ has the least-upper-bound property if and only if it is archimedean and cauchy complete.
+		\end{theorem}
 	\chapter{Topology}
 		\section{Topological Spaces}
 		\section{Metric Spaces}
