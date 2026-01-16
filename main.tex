@@ -15,12 +15,74 @@
 	colback=white,
 	boxrule=0pt,
 	frame hidden,
-	borderline west={1.5pt}{0pt}{black},
+	borderline west={1.5pt}{0pt}{black!33!white},
 	before skip=0.75cm,
 	after skip=0.75cm,
 	sharp corners,
 	breakable,
 	enhanced,
+}
+
+\newtcbtheorem[number within=lemma]{importanttheorem}{Theorem}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt
+}{th}
+
+\newtcbtheorem[number within=lemma]{importantdefinition}{Definition}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	%minipage boxed title*=-3cm,
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt
+}{th}
+
+\newtcbtheorem[number within=lemma]{importantcorollary}{Corollary}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	%minipage boxed title*=-3cm,
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt
+}{th}
+
+\newtcolorbox{importantbox}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced
 }
 
 \renewenvironment{proofsketch}{\begin{proof}[Proof Sketch]\renewcommand*{\qedsymbol}{\("\square"\)}}{\end{proof}}
@@ -61,31 +123,21 @@
 		\section{Orders}
 	\part{Algebraic Structures}
 	\chapter{Ordered Fields}
-		\iffalse
-		\begin{definition}
-			An \tbf{ordered commutative Ring} $(R,P)$ is a commutative Ring $K$ equipped with a set $P$ of \tbf{positive Elements}, such that:
+		\begin{importantdefinition}{Ordered Commutative Ring}{}
+			An \tbf{ordered commutative Ring} $(R, \leq)$ is a commutative Ring $R$ equipped with an \tbf{ordering relation} $\leq$, such that for all $a,b,c \in R$, we have:
 			\begin{enumerate}
-				\item For every $x \in K$, we have exactly one of $x \in P$ ($x$ is \tit{positive}), $x = 0$, or $-x \in P$ ($x$ is \tit{negative}).
-				\item If $x$ and $y$ are positive, then so are $x + y$ and $x \cdot y$.
+				\item $\leq$ defines a \tit{total order} on $F$. i.e:
+				\begin{enumerate}
+					\item $a \leq a$ (the order is \tit{reflexive}),
+					\item $a \leq b \wedge b \leq c \implies a \leq c$ (the order is \tit{transitive}),
+					\item $a \leq b \wedge b \leq a \implies a = b$ (the order is \tit{antisymmetric}),
+					\item $a \leq b \vee b \leq a$ (the order is \tit{strongly connected})
+				\end{enumerate}
+				\item $a \leq b \implies a + c \leq b + c$
+				\item $0 \leq a \wedge 0 \leq b \implies 0 \leq ab$
 			\end{enumerate}
-		\end{definition}
-		We say that $K$ is \tit{ordered by $P$}.
-		\fi
-		\begin{definition}
-		An \tbf{ordered commutative Ring} $(R, \leq)$ is a commutative Ring $R$ equipped with an \tbf{ordering relation} $\leq$, such that for all $a,b,c \in R$, we have:
-		\begin{enumerate}
-			\item $\leq$ defines a \tit{total order} on $F$. i.e:
-			\begin{enumerate}
-				\item $a \leq a$ (the order is \tit{reflexive}),
-				\item $a \leq b \wedge b \leq c \implies a \leq c$ (the order is \tit{transitive}),
-				\item $a \leq b \wedge b \leq a \implies a = b$ (the order is \tit{antisymmetric}),
-				\item $a \leq b \vee b \leq a$ (the order is \tit{strongly connected})
-			\end{enumerate}
-			\item $a \leq b \implies a + c \leq b + c$
-			\item $0 \leq a \wedge 0 \leq b \implies 0 \leq ab$
-		\end{enumerate}
-		\end{definition}
-				\begin{lemma}
+		\end{importantdefinition}
+		\begin{lemma}
 			For every ordered commutative Ring $(R, \leq)$ and $a \in R$, we have $-a \leq 0 \leq a$ or $a \leq 0 \leq -a$.
 		\end{lemma}
 		\begin{proof}
@@ -605,15 +657,11 @@
 			We say a map is "$\cC^n$" if its first $n$ derivatives exist and are continuous. If $f \in \cC^n$ is bijective such that $f^{-1} \in \cC^n$, then we call $f$ a \tbf{$\cC^n$-diffeomorphism}.
 		\end{definition}
 		Under the convention that the $0$th derivative of $f$ is $f$ itself, a $C^0$-diffeomorphism is the same thing as a homeomorphism.
-		\begin{theorem}
-			content...
-		\end{theorem}
 		\section{Inverse Function Theorem}
-		\begin{theorem}
-			\theoremname{Inverse Function Theorem}
+		\begin{importanttheorem}{Inverse Function Theorem}{}
 			Let $X, Y$ be finite-dimensional real affine spaces, let $U \subset X$ be open and let $f : U \to Y$ be $\cC^n$.
 			Then if the differential $Df(p)$ at a point $p \in U$ is invertible, There exists an open set $V$ with $p \in V \subset U$ such that $f|_V$ is a $\cC^n$-diffeomorphism.
-		\end{theorem}
+		\end{importanttheorem}
 		\section{Implicit Function Theorem}
 	\part{Measure and Integration}
 	\chapter{The Riemann Integral}
@@ -762,7 +810,7 @@
 			of disjoint sets $A_\alpha$, which we refer to as \tit{atoms}. Then this partition forms a Boolean algebra 
 			\begin{align*}
 				\cA((A_\alpha)_{\alpha \in I}) 
-				:= \lr{ E \bigmid E = \bigcup_{\alpha \in J} A_\alpha, J \subset I}
+				:= \lr{ E \mid E = \bigcup_{\alpha \in J} A_\alpha, J \subset I}
 			\end{align*}
 			of all the sets that can be represented as a union of atoms.
 		\end{theorem}
@@ -1135,12 +1183,12 @@
 		\fi
 	\chapter{Measurable Functions}
 	\section{Measurable Functions}
-	\begin{definition}
+	\begin{importantdefinition}{Measurable Functions}{}
 		Let $(X, \cA)$ and $(Y, \cB)$ be measurable spaces. Then we call a map $f : X \to Y$ \tbf{$\cA$-$\cB$-measurable}, or just \tbf{measurable}, if the preimage of every measurable set is again measurable, i.e.
 		\begin{align*}
 			B \in \cB \implies f^{-1}(B) \in \cA
 		\end{align*}
-	\end{definition}
+	\end{importantdefinition}
 	Once again, note the similarities between this definition and the topological definition of a continuous function. If the sigma-algebra on one of the sets is supposed to be clear from context, many authors only specify one of the the two sigma algebras. For example, for a function $f : X \to \barR$, many authors talk about $\cA$-measurability when they implicitly mean $\cA-\cB(\barR)$-measurability
 	\begin{proposition}
 		The composition of two measurable functions is again measurable.
@@ -1164,8 +1212,8 @@
 	\begin{proof}
 		Let $f : X \to Y$ be continuous. Then the preimage of every open set of $Y$ is open in $X$, i.e. contained in the Borel $\sigma$-algebra on $X$, and the open sets of $Y$ form a base of the Borel $\sigma$-algebra on $Y$.
 	\end{proof}
-	\begin{theorem}
-		\theoremname{Simple criteria for measurability)} Let $(X, \cA)$ be a measureable space. Let $f : X \to \barR$. Then the following are equivalent:
+	\begin{importanttheorem}
+		{Simple criteria for measurability)}{} Let $(X, \cA)$ be a measureable space. Let $f : X \to \barR$. Then the following are equivalent:
 		\begin{enumerate}
 			\item $f$ is $\cA$-$\cB(\barR)$ measurable,
 			\item $\forall c \in \bR: \lr{f > c} \in \cA$,
@@ -1173,7 +1221,7 @@
 			\item $\forall c \in \bR: \lr{f < c} \in \cA$,
 			\item $\forall c \in \bR: \lr{f \leq c} \in \cA$,
 		\end{enumerate}
-	\end{theorem}
+	\end{importanttheorem}
 	\begin{proof}
 		\begin{enumerate}
 			\item The latter four conditions are equivalent to each other, since:
@@ -1217,27 +1265,356 @@
 		\newpar
 	 	$E \in \cA$ is also a sufficient condition for $\chi_E$ to be measurable, since the only other possible preimages are $\emptyset \in \cA$, $X \in \cA$, $X \setminus E \in \cA$
 	\end{proof}
+	\begin{theorem}
+		Let $(X, \cA)$ be a measurable space, let $D \in \cA$, and let $f_k : D \to \bR$ be $\cA$ measurable. Then the following functions are $\cA$-measurable:
+		\begin{enumerate}
+			\item $\inf_{n \in \bN} f_n$
+			\item $\sup_{n \in \bN} f_n$
+			\item $\liminf_{n \to \infty} f_n$
+			\item $\limsup_{n \to \infty} f_n$
+		\end{enumerate}
+	\end{theorem}
+	\begin{proof}
+		For $s \in \bR$, we have:
+		\begin{enumerate}
+			\item $\displaystyle \lr{(\inf_{n \in \bN} f_n) \geq s} = \bigcap_{k = 1}^\infty \lr{f_k \geq s} \in \cA$
+			\item $\displaystyle \lr{(\sup_{n \in \bN} f_n) \leq s} = \bigcap_{k = 1}^\infty \lr{f_k \leq s} \in \cA$
+		\end{enumerate}
+		Therefore $\inf_{n \in \bN} f_n$ and $\sup_{n \in \bN} f_n$ are measurable. The same argument holds for $\sup$ and $\inf$ over subsets of $\bN$. Therefore, the compositions
+		\begin{align*}
+			\liminf_{n \to \infty} f_n = \sup_{n \in \bN} \lr(\inf_{k \geq n} f_k)
+		\end{align*}
+		and
+		\begin{align*}
+			\limsup_{n \to \infty} f_n = \inf_{n \in \bN} 	\lr(\sup_{k \geq n} f_k)
+		\end{align*}
+		are also measurable.
+	\end{proof}
+	\begin{importantcorollary}{}{}
+		Let $f_n$ be a sequence of $\cA$-measurable functions with a pointwise limit $f$. Then $f$ is $\cA$-measurable.
+	\end{importantcorollary}
 	\chapter{Lebesque Integration}
 		\section{The Lebesque Integral}
-		\begin{theorem}
-			Let $X$ be an arbitrary set. Let $c$ be the counting measure on $\cP(X)$. Let $f : X \to \barR$ be a $c$-measurable function. Then
+		\begin{definition}
+			Let $(X, \cA)$ be a measurable space. Then we call a function $f : Y \to \bR$ a \tbf{step function} if it can be represented as a finite linear combination of characteristic functions of sets in $\cA$, i.e there exist $\alpha_i \in \bR$ and $A_i \in \cA$ such that:
 			\begin{align*}
-				\int_X f ~dc = \sum_{x \in X} f(x)
+				f = \sum_{i \leq k} \alpha_i \chi_{A_i}
+			\end{align*}
+		\end{definition}
+		\begin{proposition}
+			Step functions form a vector space over $\bR$.
+		\end{proposition}
+		\begin{proposition}
+			Every step function is (extensionally) equal to a step function over pairwise disjoint sets.
+		\end{proposition}
+		\begin{lemma}
+			\theoremname{Sum of Step Functions} Let $s_1$ and $s_2$ be step functions
+			\begin{align*}
+				s_1 = \sum_{i = 0}^m \alpha_i \chi_{A_i}, \qquad
+				s_2 = \sum_{j = 0}^n \beta_j \chi_{B_j}
+			\end{align*}
+			defined on pairwise disjoint sets. Then we have:
+			\begin{align*}
+				s_1 + s_2 = \sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j)\chi_{A_i \cap B_j}
+			\end{align*}
+		\end{lemma}
+		\begin{proof}
+			\begin{enumerate}
+				\item Assume $s_1$ and $s_2$ are nonnegative step functions
+				\begin{align*}
+					s_1 = \sum_{i = 0}^m \alpha_i \chi_{A_i}, \qquad
+					s_2 = \sum_{j = 0}^n \beta_j \chi_{B_j}
+				\end{align*}
+				defined on pairwise disjoint sets.
+				\newpar
+				Then:
+				\begin{align*}
+					s_1(x) + s_2(x)
+					&=
+					\sum_{i = 0}^m \alpha_i \chi_{A_i}(x)
+					+
+					\sum_{j = 0}^n \beta_j \chi_{B_j}(x)
+				\end{align*}
+				Since the $A_i$ and $B_j$ are disjoint coverings of $X$, for every $x \in X$, there exists exactly one $i$ such that $x \in A_i$ and exactly one $j$ such that $x \in B_j$. Therefore, every $x$ contributes exactly one $\alpha_i$ for $x \in A_i$ and one $\beta_j$ for $x \in B_j$, i.e. $x \in A_i \cap B_j$ and $s_1(x) + s_2(x) = \alpha_i + \beta_j$. Since this is the only intersection which contains $x$, we can put everything together to get our desired formula:
+				\begin{align*}
+					s_1(x) + s_2(x)
+					&=
+					\sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j)\chi_{A_i \cap B_j}(x)
+				\end{align*}
+			\end{enumerate}
+		\end{proof}
+		One of the most central techniques of integration theory is the process of approximating measurable functions using step functions:
+		\begin{theorem}
+			Let $(X, \cA)$ be a measurable space. Let $f : X \to \barR$ be a nonnegative $\cA$-measurable function. Then there exists a monotonically increasing sequence $s_n$ of nonnegative step functions whose pointwise limit is $f$.
+		\end{theorem}
+		\begin{proof}
+			For $n \in \bN$ and $k \in \lr{0, \hdots, n \cdot 2^n}$, we set:
+			\begin{align*}
+				F_{n,k} := \lr{x \in X \mid \frac{k}{2^n} \leq f(x) < \frac{k+1}{2^n}}.
+			\end{align*}
+			Then
+			\begin{align*}
+				s_n(x) = 
+				\begin{cases}
+					\frac{k}{2^n}& x \in F_{n,k}\\
+					n & \tn{otherwise}
+				\end{cases}
+			\end{align*}
+			are our desired step functions.
+		\end{proof}
+		The integral of a characteristic function is already clear from our intuition: The points contained in the area under a characteristic function $\chi_A$ are exactly the cartesian product of $A$ with the interval $[0,1]$, forming a "rectangle" with side lengths $1$ and $\mu(A)$. Therefore the integral should be:
+		\begin{definition}
+			\theoremname{Lebesque integral of a characteristic function}
+			\begin{align*}
+				\int_X \chi_A ~d\mu = \mu(A)
+			\end{align*}
+		\end{definition}
+		The definition for the integral of a step function should follow naturally - we want our integral to transform linearly, therefore we define:
+		\begin{definition}
+			\theoremname{Lebesque integral of a step function}
+			Let $D \subset X$, $A_i \subset X$ pairwise disjoint, and $\alpha_i \geq 0$. Then:
+			\begin{align*}
+				\int_D \lr(\sum_{i \leq k} \alpha_i \chi_{A_i}) ~d\mu = \sum_{i \leq k} \alpha_i \mu(D \cap A_i)
+			\end{align*}
+		\end{definition}
+		\begin{importantdefinition}{Lebesque integral of a positive function}{}
+			Let $f : D \to [0,\infty]$ be $\cA$-measurable. Then:
+			\begin{align*}
+				\int_D f ~d\mu = \sup_{\substack{\tn{$s$ is a step function,}\\0 \leq s \leq f}}\lr{\int_D s ~d\mu}
+			\end{align*}
+		\end{importantdefinition}
+		\begin{definition}
+			\theoremname{Lebesque integral of an arbitrary measurable function}
+			Let $f$ be $\cA$-mesurable and
+			\begin{align*}
+				f^+ = f \cdot \chi_{f \geq 0}, \qquad
+				f^- = -f \cdot \chi_{f < 0}
+			\end{align*}
+			Note that $f^+ \geq 0$ and $f^- > 0$. Then, as long as $f^+$ or $f^-$ have a finite integral, we can define:
+			\begin{align*}
+				\int_D f ~d\mu \int_D f^+ ~d\mu - \int_D f^{-} ~d\mu
+			\end{align*}
+		\end{definition}
+		\begin{importantdefinition}{Integrable Function}{}
+			We call a function $f : X \to \barR$ $\tbf{integrable}$ with regards to a measure $\mu$ if it is $\mu$-measurable and
+			\begin{align*}
+				\int_X f~d\mu \in \bR
+			\end{align*}
+		\end{importantdefinition}
+		\begin{corollary}
+			\theoremname{Integrating over subsets}
+			\begin{align*}
+				\int_M f ~d\mu = \int_X f \cdot \chi_M ~d\mu = \int_M f ~d\mu|_M
+			\end{align*}
+		\end{corollary}
+		It is common to derive from this corollary a slight abuse of notation: Assume that $f$ is not $\cA$-measurable, but it is $\mu$-measurable, i.e. $f : D \to \barR$ such that $\mu(X \setminus D) = 0$ and $f$ is $\cA|_D$-measurable. Then it is common to implicitly expand the domain of $D$ to $X$ by setting $f(x) = 0$ on $X \setminus D$, and to therefore write:
+		\begin{align*}
+			\int_X f ~d\mu := \int_D f ~d\mu
+		\end{align*}
+		\begin{corollary}
+			\theoremname{Integrating over zero sets}
+			Let $N$ be a set such that $\mu(N) = 0$. Then 
+			\begin{align*}
+				\displaystyle \int_N f ~d\mu = 0.
+			\end{align*} 
+		\end{corollary}
+		\begin{proposition}\theoremname{Integrating with the counting measure}
+			Let $X$ be an arbitrary set. Let $\card$ be the counting measure on $\cP(X)$. Let $f : X \to \barR$. Then $f$ is integrable with respect to $\card$ if and only if $\sum_{x \in X} f(x)$ is absolutely convergent, and we have
+			\begin{align*}
+				\int_X f ~d\card = \sum_{x \in X} f(x)
+			\end{align*}
+		\end{proposition}
+		\begin{theorem}
+			\theoremname{Monotonicity of the Lebesque integral, Part 1}
+			Let $f,g : X \to \barR$ be \ul{$\cA$-measurable} and $f \leq g$. Then
+			\begin{align*}
+				0 \leq \int_X f ~d\mu \leq  \int_X g ~d\mu
 			\end{align*}
 		\end{theorem}
-		\begin{theorem}
-			\theoremname{Tao, Jordan Measure, Exercise 25}
-			A bounded function $f : [a,b] \to \bR$ is Riemann integrable if and only if it is Lebesque integrable using the Jordan measure.
-		\end{theorem}
+		The following theorem is one of the primary justification for defining the Lebesque integral as a "successor" to the Riemann integral in the first place:
+		\begin{importanttheorem}
+			{Monotone Convergence Theorem}{}
+			Let $f_n : X \to [0,\infty]$ be $\cA$-measurable such that $f_i \leq f_{i+1}$. Let $\lim_{n \to \infty} f_n = f$. Then
+			\begin{align*}
+				\int_X \lim_{n \to \infty} f_n ~d\mu
+				= 	\lim_{n \to \infty} \int_X f_n ~d\mu
+				= 	\sup_{n \in \bN} \int_X f_n ~d\mu
+			\end{align*}
+		\end{importanttheorem}
+		To prove this theorem, we will first need to prove a few lemmata:
+		\begin{lemma}
+			Let $s$ be a step function such that $0 \leq s \leq f$. Let $\alpha \in (0,1)$ and 
+			\begin{align*}
+				E_n = \lr{x \in X \mid f_n(x) \geq \alpha \cdot s(x)}
+			\end{align*}
+			Then, for all $A \in cA$, we have:
+			\begin{align*}
+				\lim_{n \to \infty} \mu(E_n \cap A) = \mu(A)
+			\end{align*}
+		\end{lemma}
+		\begin{proof}
+			We have $E_n \in \cA$, $E_n \subseteq E_{n+1}$ and $\bigcup_{n \in \bN} E_n = X$.
+			\newpar
+			Using the fact that measures are continuous from below, we get
+			\begin{align*}
+				\lim_{n \to \infty} \mu(E_n \cap A)
+				&= \mu\lr(\bigcup_{i \in \bN} \lr(E_n \cap A))\\
+				&= \mu\lr(\lr(\bigcup_{i \in \bN} E_n) \cap A)\\
+				&= \mu\lr(X \cap A)\\
+				&= \mu\lr(A)
+			\end{align*}
+		\end{proof}
+		\begin{lemma}
+			Let $s = \sum_{i \leq k} \alpha_i \chi_{A_i}$ such that the $A_i$ are pairwise disjoint. Then
+			\begin{align*}
+				\int_X f_n ~d\mu \geq \alpha \sum_{i = 1}^k \alpha_i \mu(A_i \cap E_n)
+			\end{align*}
+		\end{lemma}
+		\begin{proof}
+			\begin{align*}
+				\int_X f_n ~d\mu 
+				&\geq \int_{E_n} f_n ~d\mu\\
+				&\geq \int_{E_n} \alpha s ~d\mu\\
+				&= \int_{E_n} \alpha \sum_{i \geq k} \alpha_i \chi_{A_i} ~d\mu\\
+				&= \alpha \sum_{i \geq k} \alpha_i \int_{E_n} \chi_{A_i} ~d\mu\\
+				&= \alpha \sum_{i = 1}^k \alpha_i \mu(A_i \cap E_n)
+			\end{align*}
+		\end{proof}
+		With these in place, our proof of the monotone convergence theorem becomes reasonably straightforward:
+		\begin{proof}
+			Since the $f_n$ are nonnegative and measurable, we know that the same holds for $f$.
+			\newpar
+			By definition, $S_n := \int_X f_n ~d\mu$ is a monotonically increasing sequence of real numbers. Therefore, there exists a limit in $\barR$.
+			Since $f_n \leq f$, we have 
+			\begin{align*}
+				\int_{X} f_n ~d\mu \leq \int_X f ~d\mu
+			\end{align*} 
+			for all $n$, which immediately implies
+			\begin{align*}
+				\lim_{n \to \infty} \int_{X} f_n ~d\mu \leq \int_X f ~d\mu,
+			\end{align*}
+			proving our desired result in the case that $\lim_{n \to \infty} \int_X f_n ~d\mu = \infty$.
+			\newpar
+			Now, assume that our limit is finite. Let 
+			\begin{align*}
+				s = \sum_{i \leq k} \alpha_i \mu(A_i)
+			\end{align*}
+		 	be a step function such that $0 \leq s \leq f$. Then by our second lemma, we have
+			\begin{align*}
+				\int_X f_n ~d\mu \geq \alpha \sum_{i \leq k} \alpha_i \mu(A_i \cap E_n)
+			\end{align*}
+			Letting $n \to \infty$, we get:
+			\begin{align*}
+				\lim_{n \to \infty} \int_X f_n ~d\mu &\geq \lim_{n \to \infty} \alpha \sum_{i \leq k} \alpha_i \mu(A_i \cap E_n)\\
+				&= \alpha \sum_{i \leq k} \alpha_i \mu(A_i)\\
+				&= \alpha \int_X s ~d\mu
+			\end{align*}
+			since this holds for all $\alpha \in (0,1)$, we get:
+			\begin{align*}
+				\lim_{n \to \infty} \int_X f_n ~d\mu \geq \int_X s ~d\mu
+			\end{align*}
+			which implies
+			\begin{align*}
+				\lim_{n \to \infty} \int_X f_n ~d\mu \geq \sup \int_X s ~d\mu = \int_X f ~d\mu
+			\end{align*}
+			and since we already have the other side of this inequality by the monotonicity of the Lebesque integral, we get our desired result that
+			\begin{align*}
+				\lim_{n \to \infty} \int_X f_n ~d\mu = \int_X f ~d\mu
+			\end{align*}
+		\end{proof}
+		Next, we will work towards proving the linearity of the Lebesque integral. We will prove this in multiple steps, slowly expanding the class of functions for which we know linearity holds.
+		\begin{lemma}
+			Let $f_1$, $f_2$ be \ul{nonnegative $\cA$-measurable} functions on $X$. Then we have:
+			\begin{align*}
+				\int_X (f_1 + f_2) ~d\mu = \int_X f_1 ~d\mu + \int_X f_2 ~d\mu
+			\end{align*}
+		\end{lemma}
+		\begin{proof}
+			\begin{enumerate}
+				\item Let $f_1$ and $f_2$ be step functions
+				\begin{align*}
+					f_1 = \sum_{i = 0}^m \alpha_i \chi_{A_i}, \qquad
+					f_2 = \sum_{j = 0}^n \beta_j \chi_{B_j}
+				\end{align*}
+				defined on pairwise disjoint sets. Then, by our sum formula for step functions, we have:
+				\begin{align*}
+					f_1 + f_2 = \sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j)\chi_{A_i \cap B_j}
+				\end{align*}
+				which means we can use the same reasoning we used back then to get:
+				\begin{align*}
+					\int_X (f_1 + f_2) ~d\mu 
+					&= \int_X \lr(\sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j)\chi_{A_i \cap B_j}) ~d\mu\\
+					&= \sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j)\mu(A_i \cap B_j)\\
+					&= \sum_{i = 0}^m \alpha_i \mu(A_i) + \sum_{j = 0}^n \beta_j \mu(B_j)\\
+					&= \int_X f_1 ~d\mu + \int_X f_2 ~d\mu
+				\end{align*}
+				\item Let $f_1$ and $f_2$ be arbitrary functions. Then we can find sequences $s_n$ and $t_n$ of step functions converging to $f_1$ and $f_2$, and our desired formula follows from case (1) and the monotone convergence theorem.
+			\end{enumerate}
+		\end{proof}
+		\begin{importantcorollary}{Leaving out a zero set}{}
+			Let $N$ be a set such that $\mu(N) = 0$. Let $f : D \to \barR$ be $\cA|_D$-measurable. Then 
+			\begin{align*}
+				\displaystyle \int_D f ~d\mu = \int_{D \setminus N} f ~d\mu
+			\end{align*} 
+		\end{importantcorollary}
+		\begin{lemma}
+			The previous lemma continues to hold if $f_1$ and $f_2$ are not $\cA$-measurable, but \ul{are $\mu$-measurable}.
+		\end{lemma}
+		\begin{proof}
+			Assume $f_1$ and $f_2$ are defined on $D_1, D_2 \subset \cA$, such that $\mu(X \setminus D_1) = \mu(X \setminus D_2) = 0$. Then $f_1 + f_2$ is defined on $D_1 \cap D_2 \in \cA$, and 
+			\begin{align*}
+				\mu(X \setminus (D_1 \cap D_2)) = \mu(X \setminus D_1) + \mu(X \setminus D_2) = 0.
+			\end{align*} 
+			Therefore, we have:
+			\begin{align*}
+				\int_X (f_1 + f_2) ~d\mu
+				&= \int_{D_1 \cap D_2} (f_1 + f_2) ~d\mu\\
+				&= \int_{D_1 \cap D_2} f_1 ~d\mu + \int_{D_1 \cap D_2} f_2 ~d\mu\\
+				&= \int_{D_1} f_1  ~d\mu + \int_{D_2} f_2 ~d\mu\\
+				&= \int_{X} f_1  ~d\mu + \int_{X} f_2 ~d\mu\\
+			\end{align*}
+		\end{proof}
+		\begin{corollary}
+			\theoremname{Monotonicity of the Lebesque Integral, Part 2}
+			Let $f,g$ be nonnegative and \ul{$\mu$-measurable} such that $f \leq g$ hold $\mu$-almost everywhere. Then we have:
+			\begin{align*}
+				0 \leq \int_X f ~d\mu \leq \int_X g ~d\mu.
+			\end{align*}
+		\end{corollary}
+		\begin{lemma}\theoremname{Chebyshev Inequality}
+			Let $f : X \to [0, \infty]$ be $\mu$-measurable with $\int_X f ~d\mu < \infty$. Let $s \in (0,\infty]$. Then:
+			\begin{align*}
+				\mu(\lr{x : f(x) \geq s}) \leq 
+				\begin{cases}
+					\displaystyle\frac{1}{s}\int_X f ~d\mu & s \in (0,\infty)\\
+					0 & s = \infty
+				\end{cases}
+			\end{align*}
+		\end{lemma}
+		\begin{corollary}
+			Let $f : X \to \barR$ be $\mu$-measurable. Then:
+			\begin{enumerate}
+				\item If $\int_X f ~d\mu < \infty$, $\lr{x : f(x) = \infty}$ is a $\mu$-zero set.
+				\item If $f \geq 0$ and $\int_X f ~d\mu = 0$, $\lr{x : f(x) > 0}$ is a $\mu$-zero set.
+			\end{enumerate}
+		\end{corollary}
+		\begin{importanttheorem}{Linearity of the Lebesque Integral}{}
+			Let $\mu$ be a measure on $X$. Let $f,g : X \to \barR$ and $\alpha, \beta \in \bR$. Then we have:
+			\begin{align*}
+				\int_X (\alpha f + \beta g) ~d\mu = \alpha \int_X f ~d\mu + \beta \int_X g ~d\mu
+			\end{align*}
+		\end{importanttheorem}
+		\section{Convergence Theorems}
+		\section{$L^p$-Spaces}
 		\section{Density Functions}
-		\begin{theorem}
+		\begin{importanttheorem}{}{}
 			Let $(X, \cA, \mu)$ be a measure space. Let $\theta : X \to \barR$ be nonnegative and $\mu$-measurable. Then the map
 			\begin{align*}
 				\nu : \cA &\to \barR\\
 				A &\mapsto \int_A \theta ~d\mu
 			\end{align*}
-			is a measure, which we call the \tbf{density of $\nu$ with respect to $\mu$} and which we denote $\mu_\theta$.
-		\end{theorem}
+			is a measure, which we denote $\mu_\theta$. We call $\theta$ the \tbf{density of $\nu$ with respect to $\mu$}.
+		\end{importanttheorem}
 		\begin{corollary}
 			The following hold for $\mu_\theta$:
 			\begin{enumerate}
@@ -1249,9 +1626,9 @@
 				\item $\theta$ is unique up to equality $\mu$-almost everywhere.
 			\end{enumerate}
 		\end{corollary}
-		\begin{definition}
+		\begin{importantdefinition}{}{}
 			Let $\mu$ and $\nu$ be measures on $(X, \cA)$. Then we call $\nu$ \tbf{absolutely continuous with respect to $\mu$}, which we denote $\nu \ll \mu$, if $\mu(A) = 0$ implies $\nu(A) = 0$.
-		\end{definition}
+		\end{importantdefinition}
 		\begin{lemma}
 			Let $\sigma$ and $\nu$ be finite measures on $(X, \cA)$ such that $\nu(A) \leq \sigma(A)$ for every $A \in \cA$. Then there exists a density function $\theta$ such that $\nu = \sigma_\theta$.
 		\end{lemma}
@@ -1263,7 +1640,7 @@
 			\end{align*}
 		\end{lemma}
 		\begin{theorem}
-			\theoremname{Radon-Nikodym, first draft} Let $\mu$, $\nu$ be finite measures on $(X, \cA)$ such that $\nu \ll \mu$. Then there exists a density function $\theta \in L^1(\mu)$ such that $\nu = \mu_\theta$.
+			\theoremname{Mini-Radon-Nikodym} Let $\mu$, $\nu$ be finite measures on $(X, \cA)$ such that $\nu \ll \mu$. Then there exists a density function $\theta \in L^1(\mu)$ such that $\nu = \mu_\theta$.
 		\end{theorem}
 		In this case, $\theta$ is sometimes also called the \tbf{Radon-Nikodym derivative of $\nu$ with respect to $\mu$} and denoted $\frac{d\nu}{d\mu}$.
 		\begin{theorem}
@@ -1275,21 +1652,22 @@
 			\end{enumerate}
 		\end{theorem}
 		\begin{proof}
-			(i) $\implies$ (ii) is the Radon-Nikodym theorem. (ii) $\implies$ (iii) follows from absolute continuity of the Lebesque integral. (iii) $\implies$ (i) follows immediately from the definition of $\ll$.
+			(i) $\implies$ (ii) is our mini-Radon-Nikodym theorem. (ii) $\implies$ (iii) follows from absolute continuity of the Lebesque integral. (iii) $\implies$ (i) follows immediately from the definition of $\ll$.
 		\end{proof}
-		\begin{theorem}
-			The Radon-Nikodym theorem also holds if $\mu$ and $\nu$ are only $\sigma$-finite.
-		\end{theorem}
-		\begin{definition}
+		\begin{importanttheorem}
+			{Radon-Nikodym}{} Let $\mu$, $\nu$ be $\sigma$-finite measures on $(X, \cA)$ such that $\nu \ll \mu$. Then there exists a density function $\theta \in L^1(\mu)$ such that $\nu = \mu_\theta$.
+		\end{importanttheorem}
+		\begin{importantdefinition}{}{}
 			Let $\mu$ and $\nu$ be measures on $(X, \cA)$. Then we call $\mu$ and $\nu$ \tbf{singular with respect to each other}, which we denote $\mu \perp \nu$, if there exists a set $M \in \cA$ such that
 			\begin{align*}
 				\mu(M) = \nu(X \setminus M) = 0.
 			\end{align*}
-		\end{definition}
-		\begin{theorem}
-			\theoremname{Lebesque's decomposition theorem} Let $\mu$ and $\nu$ be measures on $(X, \cA)$, and let $\nu$ be $\sigma$-finite. Then there exists a unique decomposition $\nu = \nu_a + \nu_s$ such that $\nu_a \ll \mu$ and $\nu_a \perp \mu$.
-		\end{theorem}
+		\end{importantdefinition}
+		\begin{importanttheorem}
+			{Lebesque's decomposition theorem}{} Let $\mu$ and $\nu$ be measures on $(X, \cA)$, and let $\nu$ be $\sigma$-finite. Then there exists a unique decomposition $\nu = \nu_a + \nu_s$ such that $\nu_a \ll \mu$ and $\nu_a \perp \mu$.
+		\end{importanttheorem}
 	\chapter{Integration over Immersed Manifolds}
+		\section{Product Measures and Fubini's Theorem}
 		\section{Change of Variables}
 		\begin{lemma}
 			Let $U \subset \bR^n$ and $x_0 \in U$. Let $\phi : U \to \bR^n$ be a function such that $D\phi(x_0)$ is invertible.
@@ -1364,13 +1742,12 @@
 			\end{align*}
 			\end{enumerate}
 		\end{proof}
-		\begin{theorem}
-			\theoremname{Multivariable Substitution Formula}
+		\begin{importanttheorem}{Multivariable Substitution Formula}{}
 			Let $U \subset \bR^n$ be open. Let $\phi : U \to \bR^n$ be $C^1$. Then if $f : V \to \barR$ is $\lambda^n$-measurable, we have:
 			\begin{align*}
-				\int_V f(y) ~dy = \int_{\phi^{-1}(V)} f(\phi(x)) \abs{\det D\phi(x)} ~dx.
+				\int_V f(y) ~dy = \int_{\phi^{-1}(V)} f(\phi(x)) \cdot \abs{\det D\phi(x)} ~dx.
 			\end{align*}
-		\end{theorem}
+		\end{importanttheorem}
 		\begin{corollary}
 			Let $U,V \subset \bR^n$ be open. Let $\phi : U \to \bR^n$ be $C^1$. Then if $A \subset U$ is $\lambda^n$-measurable, so is $\phi(A)$, and we have
 			\begin{align*}
@@ -1378,19 +1755,45 @@
 			\end{align*}
 		\end{corollary}
 		\begin{proof}
-			Apply the integral transformation equation to $f = \chi_{\phi(A)}$.
+			Apply the previous equation to $f = \chi_{\phi(A)}$.
 		\end{proof}
 		\begin{example}
-			\theoremname{Two-Dimensional Bell Curve}
-			We want to find the area under the Gaussian bell curve, given by
+			\theoremname{The Gaussian Integral}
+			We want to find the area under the Gaussian bell curve pre-normalization, i.e.
 			\begin{align*}
 				\int_\bR e^{-x^2} ~dx
 			\end{align*}
 			To do this, we add an additional dimension and exploit the resulting rotational symmetry.
-			Let $f : \bR^2 \to \bR$ with
+			By Fubini's Theorem, we have:
 			\begin{align*}
-				f(x,y) = e^{-(x^2 + y^2)}
+				\int_{\bR^2} e^{-(x^2 + y^2)} ~d\lambda^2(x,y)
+				&=
+				\int_{\bR} \lr(\int_{\bR} e^{-(x^2 + y^2)} ~d\lambda(y)) ~d\lambda(x)\\
+				&=
+				\int_{\bR} \lr(\int_{\bR} e^{-x^2} \cdot e^{-y^2} ~d\lambda(y)) ~d\lambda(x)\\
+				&=
+				\int_{\bR} e^{-x^2} \cdot \lr(\int_{\bR} e^{-y^2} ~d\lambda(y)) ~d\lambda(x)\\
+				&= \int_{\bR} e^{-x^2} ~d\lambda(x) \cdot \int_{\bR} e^{-y^2} ~d\lambda(y)\\
+				&= \lr(\int_{\bR} e^{-x^2} ~d\lambda(x))^2
 			\end{align*}
+			Therefore, we have
+			\begin{align*}
+				\int_{\bR} e^{-x^2} ~d\lambda(x) &= \sqrt{\int_{\bR^2} e^{-(x^2 + y^2)} ~d\lambda(x,y)^2}
+			\end{align*}
+			We can now calculate the two-dimensional integral using multivariable substitution to transform to polar coordinates:
+			\begin{align*}
+				\int_{\bR^2} e^{-(x^2 + y^2)} ~d\lambda^2(x,y)
+				&= \int_{(0,\infty) \times (0,2\pi)} \hdots\\
+				&= \int_{(0,\infty) \times (0,2\pi)} re^{-r^2}  ~d\lambda^2(r,\omega)\\
+				&= \int_0^\infty \lr(\int_{0}^{2\pi} re^{-r^2} ~d\omega) ~dr\\
+				&= \int_0^\infty 2\pi re^{-r^2} ~dr\\
+				&= 2\pi \int_0^\infty re^{-r^2} ~dr\\
+				&= 2\pi \int_0^\infty \frac{1}{2}e^{-r^2} ~2rdr\\
+				&= 2\pi \int_{-\infty}^0 \frac{1}{2} e^{s} ~ds\\
+				&= \pi \int_{-\infty}^0 e^{s} ~ds\\
+				&= \pi\\
+			\end{align*}
+			Which means that the area under the bell curve is $\sqrt{\pi}$.
 		\end{example}
 	\chapter{Generalizing even further}
 		\section{The Bochner Integral}
