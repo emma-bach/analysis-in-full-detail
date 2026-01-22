@@ -99,7 +99,7 @@
 	\thispagestyle{fancy}
 	\part{Set Theory}
 	\chapter{Axioms of Set Theory}
-		\section{ZFC}
+		\section{Set Theoretic Axioms}
 		\section{Operations on Sets}
 		\section{Relations and Maps}
 		\begin{theorem}
@@ -121,6 +121,38 @@
 			\end{enumerate}
 		\end{theorem}
 		\section{Orders}
+		\begin{definition}
+			Let $S$ be a subset of a partially ordered set $(P, \leq)$. Then:
+			\begin{enumerate}
+				\item A \tbf{lower bound} of $S$ is an element $y \in P$ such that, for all $x \in S$,  $y \leq x$.
+				\item An \tbf{upper bound} of $S$ is an element $y \in P$ such that, for all $x \in S$,  $x \leq y$.
+			\end{enumerate}
+		\end{definition}
+		\begin{importantdefinition}{Infimum and Supremum}{}
+			Let $S$ be a subset of a partially ordered set $(P, \leq)$. Then:
+			\begin{enumerate}
+				\item A lower bound $b$ of $S$ is called an \tbf{infimum}, or \tbf{meet} of $S$ if it is the \tbf{greatest lower bound} of $S$, meaning that for all lower bounds $y$ of $S$, we have
+				\begin{align*}
+					y \leq b
+				\end{align*}
+				If $b$ is an infimum of $S$, we write:
+				\begin{align*}
+					\inf S = \inf_{s \in S} s := b
+				\end{align*}
+				\item An upper bound $B$ of $S$ is called a \tbf{supremum}, or \tbf{join} of $S$ if it is the \tbf{least upper bound} of $S$, meaning that for all upper bounds $y$ of $S$, we have
+				\begin{align*}
+					B \leq y
+				\end{align*}
+				If $B$ is a supremum of $S$, we write:
+				\begin{align*}
+					\sup S = \sup_{s \in S} s := B
+				\end{align*}
+			\end{enumerate}
+			It is often practical to use a slightly expanded notation that lets us implicitly specify subsets of $P$ fulfilling a property $\phi$:
+			\begin{align*} 
+				 \inf \lr{p \in P \mid \phi(p)} = \inf_{\substack{p \in P\\ \phi(p)}} p
+			\end{align*}
+		\end{importantdefinition}
 	\part{Algebraic Structures}
 	\chapter{Ordered Fields}
 		\begin{importantdefinition}{Ordered Commutative Ring}{}
@@ -276,18 +308,40 @@
 			\end{align*}
 			Therefore $V$ is a union of open sets, making it open.
 		\end{proof}
+		
 		\begin{definition}
 			Let $X$ be a topological space. We say that a subset of $X$ is $F_\sigma$ (from French "\tit{fermé}", "closed", and "\tit{somme}", "sum, union") if it is a countable union of closed sets. Dually, we say it is $G_\delta$ (from German "\tit{Gebiet}", an old term for "open set", and "\tit{Durschschnitt}", "average, intersection") if it is a countable intersection of open sets. 
 		\end{definition}
 		\begin{theorem}
 			The complement of a $G_\delta$ set is $F_\sigma$ and vice versa.
 		\end{theorem}
+		\section{Sequences and Limits}
+		\begin{importantdefinition}{Liminf and Limsup}{}
+				Let $X$ be a topological space that is linearly orderable by an order $\leq$. Let $x_n$ be a sequence in $X$. Then we define:
+				\begin{align*}
+					\liminf_{n \to \infty} x_n := \lim_{n \to \infty} \lr(\inf_{m \geq n} x_m)
+				\end{align*}
+				and 
+				\begin{align*}
+					\limsup_{n \to \infty} x_n := \lim_{n \to \infty} \lr(\sup_{m \geq n} x_m)
+				\end{align*}
+		\end{importantdefinition}
+		\begin{corollary}
+			We have:
+			\begin{align*}
+				\liminf_{n \to \infty} x_n = \sup_{n \geq 0} \lr(\inf_{m \geq n} x_m)
+			\end{align*}
+			and 
+			\begin{align*}
+				\limsup_{n \to \infty} x_n = \inf_{n \geq 0} \lr(\sup_{m \geq n} x_m)
+			\end{align*}
+		\end{corollary}
 		\section{Continuity}
 		The notion of continuity is central to analysis (and of key importance to mathematics and general), and one could argue the most important reason why the field of topology is of interest in the first place is because it gives us the most general setting in which we can define a notion of a continuous function. There are many different definitions of continuity in various levels of generality.
-		\begin{definition}
+		\begin{importantdefinition}{Continuous function}{}
 			Let $f : X \to Y$ be a function between topological spaces. We call $f$ \tbf{continuous} if the preimage $f^{-1}(U)$ of any open set $U$ is again an open set.
-		\end{definition}
-		If the two extreme topologies are involved, continuity of a function is often trivial to verify:
+		\end{importantdefinition}
+		If the two extremal topologies are involved, continuity of a function is often trivial to verify:
 		\begin{theorem}
 			\label{theorem:trivialcontinuity}
 			Let $f : X \to Y$ be a function between topological spaces. Assume $Y$ has the trivial topology. Then $f$ is continuous.
@@ -300,7 +354,7 @@
 			Let $f : X \to Y$ be a function between topological spaces. Assume $X$ has the discrete topology. Then $f$ is continuous.
 		\end{theorem}
 		\begin{proof}
-			Every subset of $X$ is open, therefore every preimage of $f$ must be open.
+			Every subset of $X$ is open, therefore the preimage $f^{-1}$ of any set must be open.
 		\end{proof}
 		\begin{definition}
 			Let $f: X \to Y$ be a function between topological spaces. Let $x \in X$. We call $f$ \tbf{continuous at $x$} if, for any neighborhood $V \subset Y$ of $f(x)$, there exists a neighborhood $U \subset X$ of $x$ such that $f(U) \subset V$.
@@ -326,10 +380,10 @@
 				\item[$\Longleftarrow$:] Let $V \subset X$ be open. Then $f^{-1}(V)$ is a neighborhood every $x \in f^{-1}(V)$. Therefore, $f^{-1}(V)$ is open.
 			\end{itemize}
 		\end{proof}
-		\begin{definition}
+		\begin{importantdefinition}{Sequentially continuous functions}{}
 			Let $f : X \to Y$ be a function between topological spaces. We call $f$ \tbf{sequentially continuous at a point $x$} if, for every sequence $x_n$ such that $\lim_{n \to \infty} x_n = x$, we have
 			$\lim_{n \to \infty} f(x_n) = f(x)$. We say the function is \tbf{sequentially continuous} if this condition holds for every point $x \in X$.
-		\end{definition}
+		\end{importantdefinition}
 		This definition most directly captures the intuitive idea that a function is continuous if $f(x)$ gets arbitrarily close to $f(y)$ whenever $x$ gets arbitrarily close to $y$.
 		\begin{theorem}
 			Every continuous function is sequentially continuous.
@@ -337,16 +391,16 @@
 		\begin{theorem}
 			If $X$ is first-countable (and we assume the axiom of choice), then any sequentially continuous function is continuous.
 		\end{theorem}
-		\begin{corollary}
+		\begin{importantcorollary}{}{}
 			A function $f : X \to Y$ from a first-countable space $X$ into any topological space $Y$ is continuous if and only if it is sequentially continuous.
-		\end{corollary}
+		\end{importantcorollary}
 		In particular, continuity and sequential continuity are equivalent for functions between metric spaces.
-		\begin{theorem}[\theoremname{Epsilon-Delta-Criterion}]
+		\begin{importanttheorem}{Epsilon-Delta-Criterion}{}
 			Let $f : M \to N$ be a function between metric spaces. Then $f$ is continuous at a point $x \in M$ if and only if for every $\epsilon \in \bR_{> 0}$, there exists a $\delta \in \bR_{> 0}$ such that for all $y \in M$, we have that
 			\begin{align*}
 				d_M(x,y) < \delta \implies d_N(f(x),f(y)) < \epsilon
 			\end{align*}
-		\end{theorem}
+		\end{importanttheorem}
 		This is the standard definition of continuity used in most introductory courses in real analysis, since it can be easily defined for $f : \bR \to \bR$ even if topological spaces and metric spaces haven't been introduced yet. Since it is only defined for functions between metric spaces, it is less general than most of our other definitions, but it has the advantage of often leading to simpler proofs.
 		\begin{proof}
 			\begin{itemize}
@@ -363,7 +417,7 @@
 			\end{itemize}
 		\end{proof}
 		\begin{theorem}
-			$X$ be a topological space and let $A \subset X$. Then, assuming the discrete topology on $\lr{0,1}$, the characteristic function $\chi_A : X \to \lr{0,1}$ is continuous at a point $x \in X$ if and only if $x \in \tn{int}(A)$ or $x \in \tn{int}(X \setminus A)$.
+			$X$ be a topological space and let $A \subset X$. Then, assuming the discrete topology on $\lr{0,1}$, the indicator function $\boldone_A : X \to \lr{0,1}$ is continuous at a point $x \in X$ if and only if $x \in \tn{int}(A)$ or $x \in \tn{int}(X \setminus A)$.
 		\end{theorem}
 		\begin{proof}
 			\begin{enumerate}
@@ -384,16 +438,15 @@
 		\begin{proof}
 			Assuming the standard topology on $\bR$, the interiors of both $\bQ$ and $\bR \setminus \bQ$ are empty.
 		\end{proof}
-		\begin{theorem}
-			\theoremname{(A function continuous at exactly one point)}: The function $f : \bR \to \bR$ with
+		\begin{importanttheorem}{A function continuous at exactly one point}{} The function $f : \bR \to \bR$ with
 			\begin{align*}
-				f(x) = x \cdot \chi_{\bQ}(x) = \begin{cases}
+				f(x) = x \cdot \boldone_{\bQ}(x) = \begin{cases}
 					x & x \in \bQ\\
 					0 & x \notin \bQ
 				\end{cases}
 			\end{align*}
 			is continuous at $0$ and discontinuous at every other point.
-		\end{theorem}
+		\end{importanttheorem}
 		\begin{proof}
 			\begin{enumerate}
 				\item Let $V$ be a neighborhood of $f(0) = 0$. Then by definition, there must be an $\epsilon > 0$ such that $(-\epsilon,\epsilon) \in V$. Then since $f(x) \leq x$, we have $f^{-1}(y) \geq y$, implying that
@@ -405,8 +458,8 @@
 				\item Let $x \notin \bQ$. Then the preimage of $(-\frac{1}{2}x, \frac{1}{2}x)$ contains $x$, but not any rationals between $x$ and $\frac{1}{2}x$, and therefore cannot be a neighborhood of $x$.
 			\end{enumerate}
 		\end{proof}
-		\begin{theorem}
-			\theoremname{(A function only continuous at the irrationals)} \tbf{Thomae's function} $T : \bR \to \bR$, defined as
+		\begin{importanttheorem}{A function only continuous at the irrationals}{Thomae's function}{} 
+		$T : \bR \to \bR$, defined as
 			\begin{align*}
 				T(x) =
 				\begin{cases}
@@ -415,12 +468,11 @@
 				\end{cases},
 			\end{align*}
 			is discontinuous at every rational number and continuous at every irrational number.
-		\end{theorem}
+		\end{importanttheorem}
 		Thomae's function has many other names - it is also known the \tit{modified Dirichlet function}, the \tit{Riemann function}, or under more whimsical names such as the \tit{popcorn function}, \tit{raindrop function}, \tit{countable cloud function}, or the \tit{Stars over Babylon} (due to John Horton Conway, one of the coolest mathematicians of all time).
 		\newpar
 		Recall that we call a set $F_\sigma$ if it is a countable union of closed sets, and that we call a set $G_\delta$ if it is a countable intersetion of open sets.
-		\begin{theorem}
-			\theoremname{(A function discontinuous at an arbitrary $F_\sigma$-set)}
+		\begin{importanttheorem}{A function discontinuous at an arbitrary $F_\sigma$-set}{}
 			Let $F = \bigcup_{n \in \bN} F_n$ be a countable union of closed sets $F_n$. For any point $x \in F$, let $n(x)$ be the smallest natural number such that $x \in F_{n(x)}$. Then the function $f_F : \bR \to \bR$ defined by
 			\begin{align*}
 				f_F(x) =
@@ -431,9 +483,9 @@
 				\end{cases}
 			\end{align*}
 			is continuous at every $x \in X \notin F$ and discontinuous at every $x \in F$
-		\end{theorem}
+		\end{importanttheorem}
 		\begin{corollary}
-			\theoremname{(Functions continuous at an arbitrary $G_\delta$-set)}
+			\theoremname{Functions continuous at an arbitrary $G_\delta$-set}
 			Since the complement of a $G_\delta$-set is $F_\sigma$, we can use the same construction to construct a function that is continuous at an arbitrary $G_\delta$-subset of $\bR$. 
 		\end{corollary}
 		\begin{proposition}
@@ -446,6 +498,24 @@
 			The irrationals are uncountable and the rationals are dense in the reals.
 			Any countable union of closed sets either only contains singleton sets, in which case it is countable, or contains at least one non-singleton interval, in which case it contains rational numbers. Therefore the irrationals are not $F_\sigma$ and the rationals are not $G_\delta$.
 		\end{proof}
+
+	\chapter{Topological Fields}
+		\begin{theorem}
+			Let $F$ be an ordered field. Then $F$ becomes a topological field if we give it the order topology.
+		\end{theorem}
+		\begin{theorem}{Limits and field operations}{}
+		\end{theorem}
+		\begin{corollary}
+			Let $a_n$ be a sequence in an ordered field $F$. Let $z_n$ be a zero sequence in $F$, and let $a \in F$. Then if we have
+			\begin{align*}
+				a_n \geq a - z_n
+			\end{align*}
+			for infinitely many $n$, it follows that
+			\begin{align*}
+				\liminf_{n \to \infty} a_n \geq a
+			\end{align*}
+		\end{corollary}
+	\chapter{Topological Vector Spaces}
 	\chapter{Topological Manifolds}
 	\begin{lemma}
 		Let $M$ be a topological space. Then the following are equivalent:
@@ -491,11 +561,7 @@
 	\begin{corollary}
 		Every topological manifold is separable and metrizable.
 	\end{corollary}
-	\chapter{Topological Vector Spaces}
-		\section{Normed Vector Spaces}
-		\section{Banach Spaces}
-		\section{Hilbert Spaces}
-		\section{Topological Vector Spaces}
+
 	\chapter{Uniform Spaces}
 	Many theorems in analysis require a notion of \tit{uniform convergence}, \tit{uniform continuity}, and so on. These ideas can be easily expressed in a metric space - recall that, for example, a function $f: M \to N$ between metric spaces is uniformly continuous if there exists a $\delta > 0$ such that for every $\epsilon > 0$, we have that if $d_M(x,y)  < \delta$, then $d_N(f(x),f(y)) < \epsilon$.
 	\newpar
@@ -665,6 +731,21 @@
 		\section{Implicit Function Theorem}
 	\part{Measure and Integration}
 	\chapter{The Riemann Integral}
+		\begin{importantdefinition}{Riemann integrability}{}
+			Let $f : [a,b] \to \bR$. Then we call $f$ \tbf{Riemann integrable} if it is bounded and its upper and lower Darboux integrals are equal.
+		\end{importantdefinition}
+		\begin{theorem}
+			Let $f : [a,b] \to \bR$. Then $f$ is Riemann integrable if and only if, for every $x \in [a,b]$, the upper and lower limits
+			\begin{align*}
+				\lim_{x \nearrow c} f(x), \qquad \lim_{x \searrow c} f(x)
+			\end{align*}
+			exist.
+		\end{theorem}
+		Note that we do not require the limits to coincide at any given point.
+		\begin{theorem}
+			Let $f : [a,b] \to \bR$. Then $f$ is Riemann integrable if and only if the set of discontinuities of $f$ can be covered by a countable union of intervals of arbitrarily small length.
+		\end{theorem}
+		\section{The Gauge Integral}
 	\chapter{Measure Theory}
 		\section{The Measure Problem}
 		The most basic goal of measure theory is to establish a generalized notion of a "measure function", which assigns a "volume" to a given set. In particular, we would like to establish a function that assigns volume functions to subsets of $\bR^n$ and has the following three properties:
@@ -1258,12 +1339,12 @@
 		\end{enumerate}
 	\end{theorem}
 	\begin{theorem}
-		Let $(X, \cA)$ be a measurable space and $\chi_E : X \to \bR$ be the characteristic function of a set $E \subset X$. Then $\chi_E$ is $\cA$-$\cB[\bR]$ measurable if and only if $E \in \cA$.
+		Let $(X, \cA)$ be a measurable space and $\boldone_E : X \to \bR$ be the indicator function of a set $E \subset X$. Then $\boldone_E$ is $\cA$-$\cB[\bR]$ measurable if and only if $E \in \cA$.
 	\end{theorem}
 	\begin{proof}
-		We have $\lr{1} = (-\infty,1) \cup (1, \infty) \in \cB[\bR]$ and $\chi_E^{-1}(\lr{1}) = E$, so $E$ has to be in $\cA$ for $\chi_E$ to be measurable.
+		We have $\lr{1} = (-\infty,1) \cup (1, \infty) \in \cB[\bR]$ and $\boldone_E^{-1}(\lr{1}) = E$, so $E$ has to be in $\cA$ for $\boldone_E$ to be measurable.
 		\newpar
-	 	$E \in \cA$ is also a sufficient condition for $\chi_E$ to be measurable, since the only other possible preimages are $\emptyset \in \cA$, $X \in \cA$, $X \setminus E \in \cA$
+	 	$E \in \cA$ is also a sufficient condition for $\boldone_E$ to be measurable, since the only other possible preimages are $\emptyset \in \cA$, $X \in \cA$, $X \setminus E \in \cA$
 	\end{proof}
 	\begin{theorem}
 		Let $(X, \cA)$ be a measurable space, let $D \in \cA$, and let $f_k : D \to \bR$ be $\cA$ measurable. Then the following functions are $\cA$-measurable:
@@ -1294,36 +1375,50 @@
 		Let $f_n$ be a sequence of $\cA$-measurable functions with a pointwise limit $f$. Then $f$ is $\cA$-measurable.
 	\end{importantcorollary}
 	\chapter{Lebesque Integration}
-		\section{The Lebesque Integral}
+		\section{Step Functions}
 		\begin{definition}
-			Let $(X, \cA)$ be a measurable space. Then we call a function $f : Y \to \bR$ a \tbf{step function} if it can be represented as a finite linear combination of characteristic functions of sets in $\cA$, i.e there exist $\alpha_i \in \bR$ and $A_i \in \cA$ such that:
+			Let $(X, \cA)$ be a measurable space. Then we call a function $f : Y \to \bR$ a \tbf{step function} if it can be represented as a finite linear combination of indicator functions of sets in $\cA$, i.e there exist $\alpha_i \in \bR$ and $A_i \in \cA$ such that:
 			\begin{align*}
-				f = \sum_{i \leq k} \alpha_i \chi_{A_i}
+				f = \sum_{i \leq k} \alpha_i \cdot \boldone_{A_i}
 			\end{align*}
 		\end{definition}
 		\begin{proposition}
 			Step functions form a vector space over $\bR$.
 		\end{proposition}
 		\begin{proposition}
+			Step functions can only take finitely different values.
+		\end{proposition}
+		\begin{proposition}
 			Every step function is (extensionally) equal to a step function over pairwise disjoint sets.
 		\end{proposition}
+		\begin{proof}
+			Let 
+			\begin{align*}
+				s = \sum_{i \leq k} \alpha_i \cdot \boldone_{A_i}
+			\end{align*}
+			Then if $\beta_1, \hdots, \beta_m$ are all of the finitely many different values that $s$ can take, $s$ is by definition equal to
+			\begin{align*}
+				t := \sum_{i \leq m} \beta_i \cdot \boldone_{\lr{s = \beta_i}}
+			\end{align*}
+			And since a function cannot take two values at once, the sets $\lr{s = \beta_i}$ are disjoint.
+		\end{proof}
 		\begin{lemma}
 			\theoremname{Sum of Step Functions} Let $s_1$ and $s_2$ be step functions
 			\begin{align*}
-				s_1 = \sum_{i = 0}^m \alpha_i \chi_{A_i}, \qquad
-				s_2 = \sum_{j = 0}^n \beta_j \chi_{B_j}
+				s_1 = \sum_{i = 0}^m \alpha_i \boldone_{A_i}, \qquad
+				s_2 = \sum_{j = 0}^n \beta_j \boldone_{B_j}
 			\end{align*}
 			defined on pairwise disjoint sets. Then we have:
 			\begin{align*}
-				s_1 + s_2 = \sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j)\chi_{A_i \cap B_j}
+				s_1 + s_2 = \sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j)\boldone_{A_i \cap B_j}
 			\end{align*}
 		\end{lemma}
 		\begin{proof}
 			\begin{enumerate}
 				\item Assume $s_1$ and $s_2$ are nonnegative step functions
 				\begin{align*}
-					s_1 = \sum_{i = 0}^m \alpha_i \chi_{A_i}, \qquad
-					s_2 = \sum_{j = 0}^n \beta_j \chi_{B_j}
+					s_1 = \sum_{i = 0}^m \alpha_i \cdot \boldone_{A_i}, \qquad
+					s_2 = \sum_{j = 0}^n \beta_j \cdot \boldone_{B_j}
 				\end{align*}
 				defined on pairwise disjoint sets.
 				\newpar
@@ -1331,23 +1426,50 @@
 				\begin{align*}
 					s_1(x) + s_2(x)
 					&=
-					\sum_{i = 0}^m \alpha_i \chi_{A_i}(x)
+					\sum_{i = 0}^m \alpha_i \cdot \boldone_{A_i}(x)
 					+
-					\sum_{j = 0}^n \beta_j \chi_{B_j}(x)
+					\sum_{j = 0}^n \beta_j \cdot \boldone_{B_j}(x)
 				\end{align*}
 				Since the $A_i$ and $B_j$ are disjoint coverings of $X$, for every $x \in X$, there exists exactly one $i$ such that $x \in A_i$ and exactly one $j$ such that $x \in B_j$. Therefore, every $x$ contributes exactly one $\alpha_i$ for $x \in A_i$ and one $\beta_j$ for $x \in B_j$, i.e. $x \in A_i \cap B_j$ and $s_1(x) + s_2(x) = \alpha_i + \beta_j$. Since this is the only intersection which contains $x$, we can put everything together to get our desired formula:
 				\begin{align*}
 					s_1(x) + s_2(x)
 					&=
-					\sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j)\chi_{A_i \cap B_j}(x)
+					\sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j) \cdot \boldone_{A_i \cap B_j}(x)
 				\end{align*}
 			\end{enumerate}
 		\end{proof}
-		One of the most central techniques of integration theory is the process of approximating measurable functions using step functions:
+		
+		The integral of an indicator function is already clear from our intuition: The points contained in the area under an indicator function $\boldone_A$ are exactly the cartesian product of $A$ with the interval $[0,1]$, forming a "rectangle with gaps" whose side lengths are $1$ and $\mu(A)$. Therefore the integral should be:
+		\begin{definition}
+			\theoremname{Lebesque integral of an indicator function}
+			\begin{align*}
+				\int_X \boldone_A ~d\mu = \mu(A)
+			\end{align*}
+		\end{definition}
+		The definition for the integral of a step function should follow naturally - a step function is just a finite sum of scaled characteristic functions, therefore the integral of a step function is the sum of the scaled integrals of the step functions.
+		\begin{definition}
+			\theoremname{Lebesque integral of a step function}
+			Let $D \subset X$, $A_i \subset X$ pairwise disjoint, and $\alpha_i \geq 0$. Then:
+			\begin{align*}
+				\int_D s ~d\mu 
+				&= \int_D \lr(\sum_{i \leq k} \alpha_i \cdot \boldone_{A_i}) ~d\mu\\ 
+				&:=\sum_{i \leq k} \lr(\alpha_i \cdot \int_D \boldone_{A_i} ~d\mu)\\ 
+				&= \sum_{i \leq k} \lr(\alpha_i \cdot \mu(D \cap A_i))
+			\end{align*}
+		\end{definition}
 		\begin{theorem}
-			Let $(X, \cA)$ be a measurable space. Let $f : X \to \barR$ be a nonnegative $\cA$-measurable function. Then there exists a monotonically increasing sequence $s_n$ of nonnegative step functions whose pointwise limit is $f$.
+			\theoremname{Linearity of the step function integral}
 		\end{theorem}
-		\begin{proof}
+		\begin{theorem}
+			\theoremname{Monotonicity of the step function integral}
+		\end{theorem}
+		\clearpage
+		\section{Defining the Lebesque Integral}
+			We can now use the step function integral to define the integral of more general functions:
+		\begin{importanttheorem}{Approximation via step functions}{}
+			Let $(X, \cA)$ be a measurable space. Let $f : X \to \barR$ be a nonnegative $\cA$-measurable function. Then there exists a monotonically increasing sequence $s_n$ of nonnegative step functions whose pointwise limit is $f$.
+		\end{importanttheorem}
+		\begin{proof}[Construction 1]
 			For $n \in \bN$ and $k \in \lr{0, \hdots, n \cdot 2^n}$, we set:
 			\begin{align*}
 				F_{n,k} := \lr{x \in X \mid \frac{k}{2^n} \leq f(x) < \frac{k+1}{2^n}}.
@@ -1360,23 +1482,45 @@
 					n & \tn{otherwise}
 				\end{cases}
 			\end{align*}
-			are our desired step functions.
+			are step functions converging to $f$.
 		\end{proof}
-		The integral of a characteristic function is already clear from our intuition: The points contained in the area under a characteristic function $\chi_A$ are exactly the cartesian product of $A$ with the interval $[0,1]$, forming a "rectangle" with side lengths $1$ and $\mu(A)$. Therefore the integral should be:
-		\begin{definition}
-			\theoremname{Lebesque integral of a characteristic function}
+		\begin{proof}[Construction 2]
+			Define $s_0 = 0$. Then we can inductively define
 			\begin{align*}
-				\int_X \chi_A ~d\mu = \mu(A)
+				E_n := \lr{s_{n-1} + \frac{1}{n} \leq f}
 			\end{align*}
-		\end{definition}
-		The definition for the integral of a step function should follow naturally - we want our integral to transform linearly, therefore we define:
-		\begin{definition}
-			\theoremname{Lebesque integral of a step function}
-			Let $D \subset X$, $A_i \subset X$ pairwise disjoint, and $\alpha_i \geq 0$. Then:
+			and
 			\begin{align*}
-				\int_D \lr(\sum_{i \leq k} \alpha_i \chi_{A_i}) ~d\mu = \sum_{i \leq k} \alpha_i \mu(D \cap A_i)
+				s_n := s_{n-1} + \frac{1}{n} \cdot \boldone_{E_n},
 			\end{align*}
-		\end{definition}
+			meaning we have
+			\begin{align*}
+				s_n = \sum_{k = 1}^n \frac{1}{k} \cdot \boldone_{E_i}.
+			\end{align*}
+			We now need to show that this series converges pointwise to $f$. Let $n \in \bN$.
+			\begin{enumerate}
+				\item Assume $x \in E_n$. Then, by definition, 
+				\begin{align*}
+					f_n(x) = f_{n - 1} + \frac{1}{n} \leq f(x)
+				\end{align*}
+				\item Assume $x \notin E_n$. Then, by induction, we have
+				\begin{align*}
+					f_n(x) = f_{0}(x) = 0 \leq f(x).
+				\end{align*}
+			\end{enumerate}
+			Therefore, we have $f_0 \leq f_1 \leq \hdots$ and $f_n \leq f$ for all $n$, meaning that
+			\begin{align*}
+				\lim_{n \to \infty} f_n(x) \leq f(x).
+			\end{align*}
+			If $f(x) = \infty$, then $x \in E_n$ for every $n$, and we have
+			\begin{align*}
+				\lim_{n \to \infty} f_n(x) = \sum_{k = 1}^\infty \frac{1}{k} = \infty
+			\end{align*}
+			If $f(x) < \infty$, then there must be an infinite number of $n \in \bN$ such that $f_{n-1}(x) > f_n(x) - \frac{1}{n}$, implying
+			\begin{align*}
+				\lim_{n \to \infty} f_n(x) \geq f(x)
+			\end{align*}
+		\end{proof}
 		\begin{importantdefinition}{Lebesque integral of a positive function}{}
 			Let $f : D \to [0,\infty]$ be $\cA$-measurable. Then:
 			\begin{align*}
@@ -1387,24 +1531,18 @@
 			\theoremname{Lebesque integral of an arbitrary measurable function}
 			Let $f$ be $\cA$-mesurable and
 			\begin{align*}
-				f^+ = f \cdot \chi_{f \geq 0}, \qquad
-				f^- = -f \cdot \chi_{f < 0}
+				f^+ = f \cdot \boldone_{f \geq 0}, \qquad
+				f^- = -f \cdot \boldone_{f < 0}
 			\end{align*}
 			Note that $f^+ \geq 0$ and $f^- > 0$. Then, as long as $f^+$ or $f^-$ have a finite integral, we can define:
 			\begin{align*}
 				\int_D f ~d\mu \int_D f^+ ~d\mu - \int_D f^{-} ~d\mu
 			\end{align*}
 		\end{definition}
-		\begin{importantdefinition}{Integrable Function}{}
-			We call a function $f : X \to \barR$ $\tbf{integrable}$ with regards to a measure $\mu$ if it is $\mu$-measurable and
-			\begin{align*}
-				\int_X f~d\mu \in \bR
-			\end{align*}
-		\end{importantdefinition}
 		\begin{corollary}
 			\theoremname{Integrating over subsets}
 			\begin{align*}
-				\int_M f ~d\mu = \int_X f \cdot \chi_M ~d\mu = \int_M f ~d\mu|_M
+				\int_M f ~d\mu = \int_X f \cdot \boldone_M ~d\mu = \int_M f ~d\mu|_M
 			\end{align*}
 		\end{corollary}
 		It is common to derive from this corollary a slight abuse of notation: Assume that $f$ is not $\cA$-measurable, but it is $\mu$-measurable, i.e. $f : D \to \barR$ such that $\mu(X \setminus D) = 0$ and $f$ is $\cA|_D$-measurable. Then it is common to implicitly expand the domain of $D$ to $X$ by setting $f(x) = 0$ on $X \setminus D$, and to therefore write:
@@ -1418,169 +1556,42 @@
 				\displaystyle \int_N f ~d\mu = 0.
 			\end{align*} 
 		\end{corollary}
+		\begin{importantdefinition}{Integrable Function}{}
+			We call a function $f : X \to \barR$ $\tbf{integrable}$ with regards to a measure $\mu$ if it is $\mu$-measurable and
+			\begin{align*}
+				\int_X f~d\mu \in \bR
+			\end{align*}
+		\end{importantdefinition}
 		\begin{proposition}\theoremname{Integrating with the counting measure}
 			Let $X$ be an arbitrary set. Let $\card$ be the counting measure on $\cP(X)$. Let $f : X \to \barR$. Then $f$ is integrable with respect to $\card$ if and only if $\sum_{x \in X} f(x)$ is absolutely convergent, and we have
 			\begin{align*}
 				\int_X f ~d\card = \sum_{x \in X} f(x)
 			\end{align*}
 		\end{proposition}
-		\begin{theorem}
-			\theoremname{Monotonicity of the Lebesque integral, Part 1}
-			Let $f,g : X \to \barR$ be \ul{$\cA$-measurable} and $f \leq g$. Then
-			\begin{align*}
-				0 \leq \int_X f ~d\mu \leq  \int_X g ~d\mu
-			\end{align*}
-		\end{theorem}
-		The following theorem is one of the primary justification for defining the Lebesque integral as a "successor" to the Riemann integral in the first place:
 		\begin{importanttheorem}
-			{Monotone Convergence Theorem}{}
-			Let $f_n : X \to [0,\infty]$ be $\cA$-measurable such that $f_i \leq f_{i+1}$. Let $\lim_{n \to \infty} f_n = f$. Then
+			{Monotonicity of the Lebesque Integral}{}
+			Let $\mu$ be an outer measure on $X$ such that $f,g : X \to \barR$ are $\mu$-measurable. Then if $f \leq g$ $\mu$-almost everywhere and $\int_X f ~d\mu > -\infty$, then the integral of $g$ exists and we have
 			\begin{align*}
-				\int_X \lim_{n \to \infty} f_n ~d\mu
-				= 	\lim_{n \to \infty} \int_X f_n ~d\mu
-				= 	\sup_{n \in \bN} \int_X f_n ~d\mu
+				\int_X f ~d\mu \leq \int_X g ~d\mu
 			\end{align*}
 		\end{importanttheorem}
-		To prove this theorem, we will first need to prove a few lemmata:
-		\begin{lemma}
-			Let $s$ be a step function such that $0 \leq s \leq f$. Let $\alpha \in (0,1)$ and 
-			\begin{align*}
-				E_n = \lr{x \in X \mid f_n(x) \geq \alpha \cdot s(x)}
-			\end{align*}
-			Then, for all $A \in cA$, we have:
-			\begin{align*}
-				\lim_{n \to \infty} \mu(E_n \cap A) = \mu(A)
-			\end{align*}
-		\end{lemma}
-		\begin{proof}
-			We have $E_n \in \cA$, $E_n \subseteq E_{n+1}$ and $\bigcup_{n \in \bN} E_n = X$.
-			\newpar
-			Using the fact that measures are continuous from below, we get
-			\begin{align*}
-				\lim_{n \to \infty} \mu(E_n \cap A)
-				&= \mu\lr(\bigcup_{i \in \bN} \lr(E_n \cap A))\\
-				&= \mu\lr(\lr(\bigcup_{i \in \bN} E_n) \cap A)\\
-				&= \mu\lr(X \cap A)\\
-				&= \mu\lr(A)
-			\end{align*}
-		\end{proof}
-		\begin{lemma}
-			Let $s = \sum_{i \leq k} \alpha_i \chi_{A_i}$ such that the $A_i$ are pairwise disjoint. Then
-			\begin{align*}
-				\int_X f_n ~d\mu \geq \alpha \sum_{i = 1}^k \alpha_i \mu(A_i \cap E_n)
-			\end{align*}
-		\end{lemma}
-		\begin{proof}
-			\begin{align*}
-				\int_X f_n ~d\mu 
-				&\geq \int_{E_n} f_n ~d\mu\\
-				&\geq \int_{E_n} \alpha s ~d\mu\\
-				&= \int_{E_n} \alpha \sum_{i \geq k} \alpha_i \chi_{A_i} ~d\mu\\
-				&= \alpha \sum_{i \geq k} \alpha_i \int_{E_n} \chi_{A_i} ~d\mu\\
-				&= \alpha \sum_{i = 1}^k \alpha_i \mu(A_i \cap E_n)
-			\end{align*}
-		\end{proof}
-		With these in place, our proof of the monotone convergence theorem becomes reasonably straightforward:
-		\begin{proof}
-			Since the $f_n$ are nonnegative and measurable, we know that the same holds for $f$.
-			\newpar
-			By definition, $S_n := \int_X f_n ~d\mu$ is a monotonically increasing sequence of real numbers. Therefore, there exists a limit in $\barR$.
-			Since $f_n \leq f$, we have 
-			\begin{align*}
-				\int_{X} f_n ~d\mu \leq \int_X f ~d\mu
-			\end{align*} 
-			for all $n$, which immediately implies
-			\begin{align*}
-				\lim_{n \to \infty} \int_{X} f_n ~d\mu \leq \int_X f ~d\mu,
-			\end{align*}
-			proving our desired result in the case that $\lim_{n \to \infty} \int_X f_n ~d\mu = \infty$.
-			\newpar
-			Now, assume that our limit is finite. Let 
-			\begin{align*}
-				s = \sum_{i \leq k} \alpha_i \mu(A_i)
-			\end{align*}
-		 	be a step function such that $0 \leq s \leq f$. Then by our second lemma, we have
-			\begin{align*}
-				\int_X f_n ~d\mu \geq \alpha \sum_{i \leq k} \alpha_i \mu(A_i \cap E_n)
-			\end{align*}
-			Letting $n \to \infty$, we get:
-			\begin{align*}
-				\lim_{n \to \infty} \int_X f_n ~d\mu &\geq \lim_{n \to \infty} \alpha \sum_{i \leq k} \alpha_i \mu(A_i \cap E_n)\\
-				&= \alpha \sum_{i \leq k} \alpha_i \mu(A_i)\\
-				&= \alpha \int_X s ~d\mu
-			\end{align*}
-			since this holds for all $\alpha \in (0,1)$, we get:
-			\begin{align*}
-				\lim_{n \to \infty} \int_X f_n ~d\mu \geq \int_X s ~d\mu
-			\end{align*}
-			which implies
-			\begin{align*}
-				\lim_{n \to \infty} \int_X f_n ~d\mu \geq \sup \int_X s ~d\mu = \int_X f ~d\mu
-			\end{align*}
-			and since we already have the other side of this inequality by the monotonicity of the Lebesque integral, we get our desired result that
-			\begin{align*}
-				\lim_{n \to \infty} \int_X f_n ~d\mu = \int_X f ~d\mu
-			\end{align*}
-		\end{proof}
-		Next, we will work towards proving the linearity of the Lebesque integral. We will prove this in multiple steps, slowly expanding the class of functions for which we know linearity holds.
-		\begin{lemma}
-			Let $f_1$, $f_2$ be \ul{nonnegative $\cA$-measurable} functions on $X$. Then we have:
-			\begin{align*}
-				\int_X (f_1 + f_2) ~d\mu = \int_X f_1 ~d\mu + \int_X f_2 ~d\mu
-			\end{align*}
-		\end{lemma}
 		\begin{proof}
 			\begin{enumerate}
-				\item Let $f_1$ and $f_2$ be step functions
+				\item Assume $f,g$ are nonnegative. Then if $s$ is a step function such that $s \leq f$. Then if we define $t := \boldone_{f \leq g} \cdot s$, we have $t \leq g$. Furthermore, for all $c \geq 0$, we have:
 				\begin{align*}
-					f_1 = \sum_{i = 0}^m \alpha_i \chi_{A_i}, \qquad
-					f_2 = \sum_{j = 0}^n \beta_j \chi_{B_j}
+					\mu(\lr{s = c})
+					&= \mu(\lr{s = c} \cap)
 				\end{align*}
-				defined on pairwise disjoint sets. Then, by our sum formula for step functions, we have:
-				\begin{align*}
-					f_1 + f_2 = \sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j)\chi_{A_i \cap B_j}
-				\end{align*}
-				which means we can use the same reasoning we used back then to get:
-				\begin{align*}
-					\int_X (f_1 + f_2) ~d\mu 
-					&= \int_X \lr(\sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j)\chi_{A_i \cap B_j}) ~d\mu\\
-					&= \sum_{i = 0}^m \sum_{j = 0}^n (\alpha_i + \beta_j)\mu(A_i \cap B_j)\\
-					&= \sum_{i = 0}^m \alpha_i \mu(A_i) + \sum_{j = 0}^n \beta_j \mu(B_j)\\
-					&= \int_X f_1 ~d\mu + \int_X f_2 ~d\mu
-				\end{align*}
-				\item Let $f_1$ and $f_2$ be arbitrary functions. Then we can find sequences $s_n$ and $t_n$ of step functions converging to $f_1$ and $f_2$, and our desired formula follows from case (1) and the monotone convergence theorem.
+				\item
 			\end{enumerate}
 		\end{proof}
-		\begin{importantcorollary}{Leaving out a zero set}{}
-			Let $N$ be a set such that $\mu(N) = 0$. Let $f : D \to \barR$ be $\cA|_D$-measurable. Then 
+		\begin{importanttheorem}{}{}
+			Let $f,g : X \to \barR$ and let $f$ be $\mu$-measurable. Then if $g = f$ $\mu$-almost everywhere, then $g$ is $\mu$-measurable, and
 			\begin{align*}
-				\displaystyle \int_D f ~d\mu = \int_{D \setminus N} f ~d\mu
-			\end{align*} 
-		\end{importantcorollary}
-		\begin{lemma}
-			The previous lemma continues to hold if $f_1$ and $f_2$ are not $\cA$-measurable, but \ul{are $\mu$-measurable}.
-		\end{lemma}
-		\begin{proof}
-			Assume $f_1$ and $f_2$ are defined on $D_1, D_2 \subset \cA$, such that $\mu(X \setminus D_1) = \mu(X \setminus D_2) = 0$. Then $f_1 + f_2$ is defined on $D_1 \cap D_2 \in \cA$, and 
-			\begin{align*}
-				\mu(X \setminus (D_1 \cap D_2)) = \mu(X \setminus D_1) + \mu(X \setminus D_2) = 0.
-			\end{align*} 
-			Therefore, we have:
-			\begin{align*}
-				\int_X (f_1 + f_2) ~d\mu
-				&= \int_{D_1 \cap D_2} (f_1 + f_2) ~d\mu\\
-				&= \int_{D_1 \cap D_2} f_1 ~d\mu + \int_{D_1 \cap D_2} f_2 ~d\mu\\
-				&= \int_{D_1} f_1  ~d\mu + \int_{D_2} f_2 ~d\mu\\
-				&= \int_{X} f_1  ~d\mu + \int_{X} f_2 ~d\mu\\
+				\int_X g ~d\mu = \int_X f ~d\mu
 			\end{align*}
-		\end{proof}
-		\begin{corollary}
-			\theoremname{Monotonicity of the Lebesque Integral, Part 2}
-			Let $f,g$ be nonnegative and \ul{$\mu$-measurable} such that $f \leq g$ hold $\mu$-almost everywhere. Then we have:
-			\begin{align*}
-				0 \leq \int_X f ~d\mu \leq \int_X g ~d\mu.
-			\end{align*}
-		\end{corollary}
+			as long as the right integral exists.
+		\end{importanttheorem}
 		\begin{lemma}\theoremname{Chebyshev Inequality}
 			Let $f : X \to [0, \infty]$ be $\mu$-measurable with $\int_X f ~d\mu < \infty$. Let $s \in (0,\infty]$. Then:
 			\begin{align*}
@@ -1598,14 +1609,64 @@
 				\item If $f \geq 0$ and $\int_X f ~d\mu = 0$, $\lr{x : f(x) > 0}$ is a $\mu$-zero set.
 			\end{enumerate}
 		\end{corollary}
+		\begin{importanttheorem}
+			{Monotone Convergence Theorem}{}
+			Let $f_n : X \to [0,\infty]$ be $\mu$-measurable such that $f_i \leq f_{i+1}$. Let $\lim_{n \to \infty} f_n = f$. Then
+			\begin{align*}
+				\int_X \lim_{n \to \infty} f_n ~d\mu
+				= 	\lim_{n \to \infty} \int_X f_n ~d\mu
+				= 	\sup_{n \in \bN} \int_X f_n ~d\mu
+			\end{align*}
+		\end{importanttheorem}
 		\begin{importanttheorem}{Linearity of the Lebesque Integral}{}
 			Let $\mu$ be a measure on $X$. Let $f,g : X \to \barR$ and $\alpha, \beta \in \bR$. Then we have:
 			\begin{align*}
 				\int_X (\alpha f + \beta g) ~d\mu = \alpha \int_X f ~d\mu + \beta \int_X g ~d\mu
 			\end{align*}
 		\end{importanttheorem}
+		\begin{corollary}
+			Let $f : X \to \barR$ be $\mu$-measurable. Then $f$ is integrable if and only if $\abs{f}$ is integrable.
+		\end{corollary}
+		\begin{corollary}
+			Let $f : X \to \barR$ be $\mu$-measurable. Then, assuming the integral of $f$ exists, we have
+			\begin{align*}
+				\abs{\int_X f ~d\mu} \leq \int_X \abs{f} ~d\mu
+			\end{align*}
+		\end{corollary}
+		\begin{importantcorollary}
+			{Comparison Test for the Lebesque Integral}{}
+			Let $g : X \to [0,\infty]$ be $\mu$-measurable such that $\abs{f} \leq g$ $\mu$-almost everywhere. Then if
+			\begin{align*}
+				\int_X g ~d\mu < \infty,
+			\end{align*}
+			$f$ is integrable.
+		\end{importantcorollary}
+	
+		\section{Comparing Lebesque Integration with Riemann Integration}
+		\begin{theorem}
+			The Dirichlet function $\boldone_\bQ$ is Lebesque integrable, but not Riemann integrable.
+		\end{theorem}
+		\begin{importanttheorem}{}{}
+			A Lebesque-integrable function is not necessarily "almost Riemann-integrable". More formally, there exists a function $f : \bR \to \bR$ with the following properties:
+			\begin{enumerate}
+				\item $f$ is Lebesque-integrable.
+				\item There exists no Riemann-integrable function $g$ such that $f = g$ almost everywhere.
+			\end{enumerate}
+		\end{importanttheorem}
+		\begin{importanttheorem}{}{}
+			Let $f : [a,b] \to \bR$. Then $f$ is Riemann integrable if and only if it is the limit of a uniformly convergent sequence of step functions over Jordan measurable sets.
+		\end{importanttheorem}
+		
+		\clearpage
+		
 		\section{Convergence Theorems}
+		
+		\clearpage
+		
 		\section{$L^p$-Spaces}
+		
+		\clearpage
+		
 		\section{Density Functions}
 		\begin{importanttheorem}{}{}
 			Let $(X, \cA, \mu)$ be a measure space. Let $\theta : X \to \barR$ be nonnegative and $\mu$-measurable. Then the map
@@ -1755,7 +1816,7 @@
 			\end{align*}
 		\end{corollary}
 		\begin{proof}
-			Apply the previous equation to $f = \chi_{\phi(A)}$.
+			Apply the previous equation to $f = \boldone_{\phi(A)}$.
 		\end{proof}
 		\begin{example}
 			\theoremname{The Gaussian Integral}
