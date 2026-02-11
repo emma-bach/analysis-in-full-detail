@@ -110,6 +110,25 @@
 	boxrule=1.5pt
 }{th}
 
+\newtcbtheorem[number within=lemma]{importantlemma}{Lemma}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	%minipage boxed title*=-3cm,
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt
+}{th}
+
 \newtcolorbox{importantbox}{colback=white,
 	colframe=black,
 	sharp corners,
@@ -710,7 +729,7 @@
 			\end{align*}
 		\end{proof}
 		\begin{proposition}
-			\theoremname{Linearity of the differential operator}
+			\theoremname{Linearity of the differentiation operator}
 			Let $V, W$ be normed vector spaces over a field $\bF$, and let $F,G: V \supset U \to W$ be totally differentiable at $\vx \in U$. Let $c \in \bF$. Then:
 			\begin{enumerate}
 				\item $D(cF)(\vx) = c \cdot (DF(\vx))$
@@ -719,9 +738,8 @@
 		\end{proposition}
 		\begin{align*}
 		\end{align*}
-		\section{Divergence and Curl}
-		\begin{definition}
-			\theoremname{Divergence of a Vector Field}
+		\section{Differential Operators}
+		\begin{importantdefinition}{Divergence of a Vector Field}{}
 			Let 
 			\begin{align*}
 				f : \bR^m \supset S &\to \bR^n\\
@@ -730,7 +748,7 @@
 			\begin{align*}
 				\div f = \tr Df
 			\end{align*}
-		\end{definition}
+		\end{importantdefinition}
 		\begin{anmerkung}
 			If we assume the standard base on $\bR^n$, we have:
 			\begin{align*}
@@ -742,6 +760,32 @@
 		$\div f$ has a nice physical interpretation: Imagine $f$ as a physical vector field describing the flow of a fluid. Take a neighborhood around a point $x$, measure the amount of fluid flowing out of that neighborhood, and subtract the amount of fluid flowing into that neighborhood. Then $(\div f)(x)$ is the limiting value of this operation as we let our neighborhoods converge to the point $x$ itself.
 		\newpar
 		This means that $x$ is a \tit{source} iff $(\div f)(x) > 0$, and a \tit{sink} iff $(\div f)(x) < 0$.
+		\begin{corollary}
+			Let $\id : \bR^d \to \bR^d$ be the identity function. We have
+			\begin{align*}
+				\div~ (\id) = d,
+			\end{align*}
+			which means that, in cases where the notation is less formal, we have
+			\begin{align*}
+				\div~ x = d.
+			\end{align*}
+		\end{corollary}
+		\begin{importantdefinition}{Laplacian}{}
+			Let 
+			\begin{align*}
+				f : \bR^m \supset S &\to \bR^n\\
+				x &\mapsto (f_1(x), \hdots, f_n(x))
+			\end{align*} be continuously differentiable. Then the \tbf{laplacian} of $f$ is defined to be
+			\begin{align*}
+				\Delta f = \div (\nabla f)
+			\end{align*}
+		\end{importantdefinition}
+		\begin{anmerkung}
+			Once again, assuming the standard base on $\bR^n$, we simply have:
+			\begin{align*}
+				\Delta f = \div (\nabla f) = \sum_{i = 1}^n \frac{\partial^2}{\partial x_i^2} f_i(x)
+			\end{align*}
+		\end{anmerkung}
 	\chapter{Differentiable Manifolds}
 		\section{Differentiable Manifolds}
 		\begin{definition}
@@ -878,25 +922,8 @@
 			\item We want our volume to be a positive real number.
 		\end{enumerate}
 		We call a $\sigma$-additive function a \tit{measure} - we want to eventually find a meausure on $\bR^n$ that also fulfills the other properties, but we want measures to be far more generally applicable, and as such we want to be able to define measures much more general spaces that may not have a defined notion of an interval or an isometry.
-		\begin{proposition}
-			Let $X$ be a set and $\cA \subseteq \cP(X)$. Then the $\sigma$-additivity of a function $\mu : \cA \to [0,\infty]$ is only well defined if $\cA$ contains the empty set and is closed under countable union.
-		\end{proposition}
-		\begin{proof}
-			We can decompose any disjoint union of sets further by adding the empty set, therefore our measure should be defined on the empty set. Given any disjoint sets, we want the measure of their countable union to be equal to the sum of their measures, therefore the measure of the countable union should be well-defined in the first place.
-		\end{proof}
-		\begin{corollary}\theoremname{$\emptyset$ is always a zero set}
-			Let $\mu$ be a $\sigma$-additive function $\cA \to [0,\infty]$. Then $\mu(\emptyset) = 0$.
-		\end{corollary}
-		\begin{proof}
-			We can add the empty set to any disjoint union of sets without changing the resulting set, therefore the measure of the empty set should not change the sum, i.e. it should be zero.
-		\end{proof}
-		\begin{corollary}\theoremname{$\sigma$-Additivity implies monotonicity}
-			Let $\mu$ be a $\sigma$-additive function $\cA \to [0,\infty]$. Then $A \subset B$ implies $\mu(A) \leq \mu(B)$.
-		\end{corollary}	
-		\begin{proof}
-			We have $B = A \sqcup (B \setminus A)$, implying $\mu(B) = \mu(A) + \mu(B \setminus A) \geq \mu(A)$.
-		\end{proof}
-		It will turn out that there exists exactly one function on $\bR^n$, called the \tit{Lebesque measure} $\lambda^n$, that fulfills these conditions for a very large family of sets (the so-called "Borel $\sigma$-Algebra") - enough to include every "somewhat reasonable" subset of $\bR^n$. However, there are still counterexamples.
+		\newpar
+		It will turn out that there exists exactly one function on $\bR^n$, called the \tit{Lebesque measure} $\lambda^n$, that fulfills these conditions for a very large family of sets - enough to include every "somewhat reasonable" subset of $\bR^n$. However, there are still counterexamples.
 		\begin{proposition}
 			Every subset of $\bR^n$ being Lebesque-measurable is consistent with ZF (without the axiom of choice).
 		\end{proposition}
@@ -940,20 +967,20 @@
 		\end{enumerate}
 		\end{proof}
 		\begin{corollary}
-			Vitali sets are not measurable by any translation-invariant measure.
+			Vitali sets are not measurable by a translation-invariant normed measure.
 		\end{corollary}
 		\begin{proof}
-			Assume that $\lambda^1$ is our desired Lebesque measure on $\bR$, which is invariant under isometries and countably additive. Then we have
+			Assume that $\lambda$ is translation-invariant, countably additive and that $\lambda([a,b]) = b-a$. Then we have:
 			\begin{align*}
-				1 = \lambda^1([0,1]) \leq \lambda^1\lr(\bigcup_{k \in \bN} (q_k + V)) \leq \lambda^1\lr([-1,2]) = 3
+				1 = \lambda([0,1]) \leq \lambda\lr(\bigcup_{k \in \bN} (q_k + V)) \leq \lambda\lr([-1,2]) = 3
 			\end{align*}
 			Since our measure is countably additive and invariant under isometries, we can translate each individual set and preserve the measure:
 			\begin{align*}
-				\lambda^1\lr(\bigcup_{k \in \bN} (q_k + V)) 
-				&= \sum_{k \in \bN} \lambda^1\lr(q_k + V)\\
-				&= \sum_{k \in \bN} \lambda^1\lr(V)
+				\lambda\lr(\bigcup_{k \in \bN} (q_k + V)) 
+				&= \sum_{k \in \bN} \lambda\lr(q_k + V)\\
+				&= \sum_{k \in \bN} \lambda\lr(V)
 			\end{align*}
-			Now, if $\lambda^1(V) \leq 0$, we wouldn't have $1 \leq \sum_{k \in \bN} \lambda^1\lr(V)$, and if $\lambda^1(V) > 0$, we wouldn't have $\sum_{k \in \bN} \lambda^1\lr(V) \leq 3$. Therefore every possible measure we could assign to $V$ leads to a contradiction.
+			Now, if $\lambda(V) \leq 0$, we wouldn't have $1 \leq \sum_{k \in \bN} \lambda\lr(V)$, and if $\lambda(V) > 0$, we wouldn't have $\sum_{k \in \bN} \lambda\lr(V) \leq 3$. Therefore every possible measure we could assign to $V$ leads to a contradiction.
 		\end{proof}
 		\subsection{The Banach-Tarski Paradox}
 		\begin{theorem}
@@ -1304,42 +1331,42 @@
 		\section{Measures}
 		With our different subset systems in place, we can finally give a general formal definition of a measure. Along the way, we will encounter outer measures, contents, and premeasures, which are weakened measures that we can use to generate proper ones.
 		
-		\begin{definition}
+		\begin{importantdefinition}{Outer Measure}{}
 			Let $X$ be a set and $\mu$ be a function $\cP(X) \to [0,\infty]$. We call $\mu$ an \tbf{outer measure on $X$} if it is $\sigma$-subadditive.
-		\end{definition}
-		Frustratingly, the Jordan outer measure $J^*$ is not an outer measure in this sense - it only fulfills finite subadditivity, not the full $\sigma$-Subadditivity. However, the Lebesque outer measure $\lambda^*$ thankfully is an outer measure in this sense (and historically, I assume this definition arose from a desire to generalize the Lebesque outer measure).
-		\begin{definition}
-			Let $\mu$ be an outer measure on a set $X$. Then we call a subset $A \subset X$ \tbf{$\mu$-measurable}, or just \tbf{measurable}, if for all $S \subset X$ we have
+		\end{importantdefinition}
+		\begin{importantdefinition}{Measurable Set}{}
+			Let $\mu$ be an outer measure on a set $X$. Then we call a subset $A \subset X$ \tbf{$\mu$-measurable}, or just \tbf{measurable}, if for all $S \subseteq X$ we have
 			\begin{align*}
 				\mu(S) = \mu(S \cap A) + \mu(S \setminus A)
 			\end{align*}
 			The system of all $\mu$-measurable sets is sometimes denoted $\cM(\mu)$.
-		\end{definition}
+		\end{importantdefinition}
+		By this definition, $\mu$-measurable sets are exactly the sets for which $\mu$ is $\sigma$-additive. This means that if we restrict $\mu$ to its measurable sets, we get a proper measure.
+		\newpar		
 		Note that by the subadditivity of outer measures, we already get that the left side is at most as large as the right side, meaning that this condition can equivalently be weakened to
 		\begin{align*}
 			\mu(S) \geq \mu(S \cap A) + \mu(S \setminus A).
 		\end{align*}
-		\begin{theorem}
+		\begin{importanttheorem}{Importance of $\sigma$-algebras}{}
 			Let $\mu$ be an outer measure. Then the set of $\mu$-measurable sets forms a $\sigma$-Algebra.
-		\end{theorem}
-		In order for our disjoint sum condition for "measures" to be well-defined, it already followed that the domain of a measure needs to be a system of sets that contains the empty set and is closed under countable union. This theorem suggests that, at minimum, it should also be a $\sigma$-Algebra. This finally leads us to a concrete definition of what a measure should be in general:
-		\begin{definition}
+		\end{importanttheorem}
+		Since the restriction of an outer measure to its measurable sets forms a proper measure, this theorem tells us that $\sigma$-algebras give us the most sensible definition for which properties the domain of a measure should fulfill. Therefore, we finally get a proper definition of a measure:
+		\begin{importantdefinition}{}{}
 			Let $\cA$ be a \ul{$\sigma$-Algebra}. Then we call a $\sigma$-additive function $\mu : \cA \to [0,\infty]$ a \tbf{measure}.
-		\end{definition}
-		\begin{definition}
+		\end{importantdefinition}
+		\begin{importantdefinition}{}{}
 			Let $\cS$ be a \ul{set semiring.} Then we call a \ul{finitely additive} function $\cS \to [0,\infty]$ a \tbf{content}, and a \ul{$\sigma$-additive} function $\cS \to [0,\infty]$ a \tbf{premeasure}.
-		\end{definition}
+		\end{importantdefinition}
 		In effect, a premeasure is a measure whose domain might not be as big as it could be. Every measure trivially also defines a content and a premeasure, and every measure defined on $\cP(X)$ defines an outer measure.
 		\newpar
-		We can construct outer measures from a very large class of functions by mimicking the construction of the Lebesque outer measure from the elementary Volume function:
-		\begin{theorem}
-			\theoremname{Carathéodory Extension}
+		We can construct outer measures from a very large class of functions by the following construction:
+		\begin{importanttheorem}{Carathéodory Extension}{}
 			Let $\cS$ be a system of subsets of a set $X$ containing the empty set. Let $\lambda : \cS \to [0,\infty]$ be a function such that $\lambda(\emptyset) = 0$. Then the function
 			\begin{align*}
 				\mu(E) := \inf\lr{\sum_{i = 1}^\infty \lambda(P_i) \mid P_i \in \cS, E \subset \bigcup_{i = 1}^\infty P_i}
 			\end{align*}
 			is an outer measure on $X$.
-		\end{theorem}
+		\end{importanttheorem}
 		\iffalse
 		\section{Uncountable Sums}
 		\begin{definition}
@@ -1500,14 +1527,22 @@
 		The collection of subsets of $\bR^n$ that are either Lebesque measurable or have a Lebesque-measurable complement form a Boolean algebra.
 	\end{theorem}
 	You may have heard in linear algebra that the determinant of a matrix $S$ tells us how the matrix scales the volume of the unit cube. Since the Lebesque measure is defined using volumes of unit cubes, this intuition also holds for the image of any set $E$ under $S$:
-	\begin{theorem}
-		\theoremname{Linear Transformation Equation}
+	\begin{importanttheorem}{Linear Transformation Equation}{}
 		\label{thm:lineartransformationequation}
 		Let $S \in \bRnn$. Then for all $E \subset \bR^n$, we have:
 		\begin{align*}
 			\lambda^n(S(E)) = \abs{\det(S)}\lambda^n(E)
 		\end{align*}
-	\end{theorem}
+	\end{importanttheorem}
+	\begin{importantdefinition}{Smith-Volterra-Cantor Set}{}
+		The Smith-Volterra-Cantor set is the set obtained by removing the middle $1/8$ of the interval $[0,1]$, and then iteratively removing the middle $1/8$ of any remaining intervals.
+	\end{importantdefinition}
+	\begin{importanttheorem}{Empty interior does not imply zero measure}{}
+		The Smith-Volterra-Cantor set has empty interior but positive measure.
+	\end{importanttheorem}
+	\begin{importanttheorem}{Compact does not imply Jordan measurable}{}
+		The Smith-Volterra-Cantor set is compact, but not Jordan measurable.
+	\end{importanttheorem}
 	\chapter{Measurable Functions}
 	\section{Measurable Functions}
 	\begin{importantdefinition}{Measurable Functions}{}
@@ -1880,15 +1915,17 @@
 			\end{align*}
 		\end{corollary}
 		\begin{importantcorollary}
-			{Comparison Test for the Lebesque Integral}{}
+			{Dominated Convergence Theorem}{}
 			Let $g : X \to [0,\infty]$ be $\mu$-measurable such that $\abs{f} \leq g$ $\mu$-almost everywhere. Then if
 			\begin{align*}
 				\int_X g ~d\mu < \infty,
 			\end{align*}
 			$f$ is integrable.
-		\end{importantcorollary}
+		\end{importantcorollary}´
 	
-		\section{Comparing Lebesque Integration with Riemann Integration}
+		\clearpage
+		
+		\section{Comparing Riemann Integration and Lebesque Integration}
 		\begin{theorem}
 			The Dirichlet function $\boldone_\bQ$ is Lebesque integrable, but not Riemann integrable.
 		\end{theorem}
@@ -1899,6 +1936,9 @@
 				\item There exists no Riemann-integrable function $g$ such that $f = g$ almost everywhere.
 			\end{enumerate}
 		\end{importanttheorem}
+		\begin{proof}
+			Consider the indicator function $\boldone_{SVC}$ of the Smith-Volterra-Cantor set.
+		\end{proof}
 		\begin{importanttheorem}{}{}
 			Let $f : [a,b] \to \bR$. Then $f$ is Riemann integrable if and only if it is the limit of a uniformly convergent sequence of step functions over Jordan measurable sets.
 		\end{importanttheorem}
@@ -1906,11 +1946,342 @@
 		\clearpage
 		
 		\section{Convergence Theorems}
-		
+		\begin{importanttheorem}{Levi's Stronger Monotone Convergence Theorem}{}
+			The monotone convergence theorem continues to hold if $f_n \leq f_{n+1}$ and $f_n \nearrow f$ only hold $\mu$-almost everywhere.
+		\end{importanttheorem}
+		\begin{importantcorollary}{Exchange of Integrals and Sums}{}
+				Let $f_n$ be nonnegative and $\mu$-measurable. Then
+				\begin{align*}
+					\int_X \lr(\sum_{n = 1}^\infty f_n) ~d\mu
+					&=
+					\sum_{n = 1}^\infty \lr(\int_x f_n ~d\mu)
+				\end{align*}
+		\end{importantcorollary}
+		\begin{importanttheorem}{Fatou's Lemma}{}
+			Let $(f_n)$ be a sequence of $\mu$-measurable functions $X \to \barR$. Let $g \in \cL^1$. Then if we have $f_n \geq g$ $\mu$-almost everywhere for all $n \in \bN$, we have
+			\begin{align*}
+				\int_X \lr(\liminf_{n \to \infty} f_n) ~d\mu
+				\leq
+				\liminf_{n \to \infty} \int_X f_n ~d\mu
+			\end{align*}
+		\end{importanttheorem}
+		\begin{importanttheorem}{Lebesque}{}
+			Let $f$, $f_k$ be $\mu$-measurable functions such that $f_k \to f$ $\mu$-almost everywhere. Assume there exists a nonnegative Function $g \in \cL^1$ such that $\sup_k \abs{f_k} \leq g$ $\mu$-almost everywhere. Then we have $f \in \cL^1$ and
+			\begin{align*}
+				\int_X f ~d\mu = \lim_{k \to \infty} \int_X f_k ~d\mu
+			\end{align*}
+		\end{importanttheorem}
+		\begin{lemma}\theoremname{Continuity of Parametrized Integrals}{}
+			Let $(X, \cA, \mu)$ be a measure space. Let $U \subset \bR^n$ be open. Let $f : U \times X \to \bR$. Then
+			\begin{align*}
+				\phi : U &\to \bR\\
+				\phi(y) &= \int_X f(y,x) ~d\mu(x)
+			\end{align*}
+			is continuous if the following hold:
+			\begin{enumerate}
+				\item $f(\cdot,x)$ is continuous in $U$ for $\mu$-almost all $x \in X$,
+				\item $f(y, \cdot)$ is $\mu$-measurable for all $y \in U$,
+				\item there exists a function $g \in \cL^1(\mu)$ such that for all $y \in U$ and $\mu$-almost all $x \in X$, we have
+				\begin{align*}
+					\norm{f(y,x)} \leq g(x)
+				\end{align*}
+			\end{enumerate}
+		\end{lemma}
+		\begin{importanttheorem}{Differentiation under the Integral Sign}{}
+		Let $(X, \cA, \mu)$ be a measure space, $U \subset \bR^n$ open, and $f : U \times X \to \bR$.
+		Then
+		\begin{align*}
+			\phi(y) := \int_X f(y,x) ~d\mu(x)
+		\end{align*}
+		is continuously differentiable with
+		\begin{align*}
+			\frac{\partial}{\partial y_i} \int_X f(y,x) ~d\mu(x) = \int_x \frac{\partial}{\partial y_i} f(y,x) ~d\mu(x)
+		\end{align*}
+		if the following hold:
+		\begin{enumerate}
+			\item $f(\cdot,x)$ is continuously differentiable in $U$ for almost all $x$,
+			\item $f(y,\cdot)$ is $\mu$-measurable for almost all $y \in U$,
+			\item There exists a function $g \in \cL^1(\mu)$ such that
+			\begin{align*}
+				\abs{\frac{\partial}{\partial y_i} f(y,x)} \leq g(x)
+			\end{align*}
+			for all $y \in U$, $\mu$-almost all $x \in X$ and $i \in \lr{1,\hdots,n}$.
+		\end{enumerate}
+		\end{importanttheorem}
+		\begin{theorem}\theoremname{Absolute continuity of the Lebesque integral}
+			Let $f \in \cL^1(\mu)$. Let $\epsilon > 0$. Then there exists a $\delta > 0$ such that, for all $A \in \cA$:
+			\begin{align*}
+				\mu(A) < \delta \implies \int_A \abs{f} ~d\mu < \epsilon
+			\end{align*}
+		\end{theorem}
 		\clearpage
 		
 		\section{$L^p$-Spaces}
+		\begin{importantdefinition}{$\cL^p$}{}
+			Let $1 \leq p < \infty$. We denote by $\cL^p = \cL^p(X, \cA, \mu)$ the set of all $\mu$-measurable functions $f$ such that
+			\begin{align*}
+				\int_X \abs{f}^p ~d\mu < \infty
+			\end{align*}
+		\end{importantdefinition}
+		\begin{importantdefinition}{$L^p$ Norm}{}
+			Let $1 \leq p < \infty$ and $f \in \cL^p(X, \cA, \mu)$. We call
+			\begin{align*}
+				\norm{f}_p = \sqrt[p]{\int_X \abs{f}^p ~d\mu}
+			\end{align*}
+			The $L^p$-Norm, or just $p$-Norm of $f$.
+		\end{importantdefinition}
+		Note that, if we view integration as the natural "continuous analogue of summation"\footnote{We can actually formalize this by going the other way - summation is just integration over a discrete space, using the counting measure as the canonical measure.} and $f$ as a vector with uncountably many components, this is a direct generalization of the familiar $p$-norm of vectors, such as the euclidean norm
+		\begin{align*}
+			\norm{\vx}_2 = \sqrt{\sum_{i = 1}^n x_i^2}
+		\end{align*}
+		\begin{importanttheorem}{$L^\infty$-Norm}{}
+			We have
+			\begin{align*}
+				\lim_{p \to \infty} \norm{f}_p = \inf_{s > 0} \mu\lr{\abs{f} > s}
+			\end{align*}
+		\end{importanttheorem}
+		\begin{lemma}\theoremname{Young Inequality}{}
+			Let $p,q \in (1,\infty)$ such that $\frac{1}{p} + \frac{1}{q} = 1$. Then, for nonnegative $a,b \geq 0$, we have:
+			\begin{align*}
+				ab \leq \frac{a^p}{p} + \frac{b^q}{q}
+			\end{align*}
+		\end{lemma}
+		\begin{proof}
+			From the concavity of the logarithm, we get:
+			\begin{align*}
+				\ln(\frac{a^p}{p} + \frac{b^q}{q})
+				&\geq
+				\frac{1}{p} \ln(a^p) + \frac{1}{q} \ln(b^q)
+			\end{align*}
+			Which we can immediately simplify to get:
+			\begin{align*}
+				\frac{1}{p} \ln(a^p) + \frac{1}{q} \ln(b^q)
+				&=
+				\ln(a) + \ln(b)
+				=
+				\ln(ab)
+			\end{align*}
+			Exponentiating both sides gives us our desired result.
+		\end{proof}
+		\begin{anmerkung}
+			Keep in mind that:
+			\begin{align*}
+				\frac{1}{p} + \frac{1}{q} &= 1\\
+				\Longleftrightarrow \frac{1}{q} &= 1 - \frac{1}{p}\\
+				&= \frac{p-1}{p}\\
+				\Longleftrightarrow q &= \frac{p}{p-1}
+			\end{align*}
+		\end{anmerkung}
 		
+		Now, letting $\frac{1}{\infty} = 0$, we get:
+		\begin{importantcorollary}{Hölder Inequality}{}
+			Let $p,q \in [1,\infty]$ such that $\frac{1}{p} + \frac{1}{q} = 1$. Let $f \in \cL^p$ and $g \in \cL^q$. Then we have $fg \in \cL^1$ and, in particular,
+			\begin{align*}
+				&\abs{\int_X f(x) \cdot g(x) ~d\mu(x)}\\
+				\leq &\norm{fg}_1 \leq \norm{f}_p \cdot \norm{g}_q			
+			\end{align*}
+		\end{importantcorollary}
+		\begin{proof}
+			\phantom{}
+			\begin{enumerate}
+				\item[$p = 1$:]
+				In this case, we have $q = \infty$. We have
+				\begin{align*}
+					g(x) < \inf_{s > 0} \lr{\mu(\abs{g} > s) = 0} = \norm{g}_\infty
+				\end{align*}
+				$\mu$-almost everywhere, and thus
+				\begin{align*}
+					\int_X \abs{f(x) \cdot g(x)} ~d\mu(x)
+					&\leq
+					\int_X \abs{f(x)} \cdot \norm{g}_\infty ~d\mu(x)\\
+					&=
+					\int_X \abs{f(x)} ~d\mu(x) \cdot \norm{g}_\infty\\
+					&=
+					\norm{f}_1 \cdot \norm{g}_\infty
+				\end{align*}
+				
+				\item[$p > 1$:] Assume that $\norm{f}_p \cdot \norm{g}_q > 0$. Then, applying the Young inequality with $a = \abs{f(x)}/\norm{f}_p$ and $b = \abs{g(x)}/\norm{g}_q$, we get
+				\begin{align*}
+					\frac{f(x)g(x)}{\norm{f}_p\norm{g}_q}
+					&\leq
+					\frac{\abs{f(x)}\abs{g(x)}}{\norm{f}_p\norm{g}_q}\\
+					&\leq
+					\frac{\abs{f(x)}^p}{p\norm{f}_p^p}
+					+
+					\frac{\abs{g(x)}^q}{q\norm{g}_q^q}
+				\end{align*}
+				Integrating both sides gives:
+				\begin{align*}
+					\frac{\norm{fg}_1}{\norm{f}_p \norm{g}_q}
+					&=
+					\frac{1}{\norm{f}_p\norm{g}_q} \cdot \int_X f(x)g(x) ~d\mu(x)\\
+					&\leq			
+					\frac{1}{\norm{f}_p\norm{g}_q} \cdot \int_X \abs{f(x)}\abs{g(x)} ~d\mu(x)\\	
+					&\leq 
+					\frac{1}{p\norm{f}_p^p} \cdot \int_X \abs{f(x)}^p ~d\mu(x)
+					+
+					\frac{1}{q\norm{g}_q^q} \cdot \int_X \abs{g(x)}^q ~d\mu(x)\\
+					&=
+					\frac{1}{p\norm{f}_p^p} \cdot \norm{f}_p^p
+					+
+					\frac{1}{q\norm{g}_q^q} \cdot \norm{g}_q^q\\
+					&= \frac{1}{p} + \frac{1}{q}\\
+					&= 1
+				\end{align*}
+				Which gives us our desired inequality.
+			\end{enumerate}
+		\end{proof}
+		\begin{lemma}
+			$\cL^p$ is closed under addition.
+		\end{lemma}
+		\begin{proof}
+			\begin{enumerate}
+				\item $p = 1$: Follows from the triangle inequality on $\bR$:
+				\begin{align*}
+					\norm{f + g}_1 
+					&=
+					\int_X \abs{f(x) + g(x)} ~d\mu(x)\\
+					&\leq 
+					\int_X \abs{f(x)} + \abs{g(x)} ~d\mu(x)\\
+					&= \int_X \abs{f(x)} ~d\mu(x) + \int_X \abs{g(x)} ~d\mu(x)\\
+					&= \norm{f}_1 + \norm{g}_1
+				\end{align*}
+				\item $p \in (1, \infty)$: Since the function $t \mapsto t^p$ is convex on $[0,\infty)$, we have:
+				\begin{align*}
+					\abs{f + g}^p 
+					&=
+					2^p \abs{\frac{f + g}{2}}^p\\
+					&\leq
+					2^{p-1}(\abs{f}^p + \abs{g}^p)
+				\end{align*}
+				\item $p = \infty$:
+				We have $\abs{f(x)} \leq \norm{f}_\infty$ and $\abs{g(x)} \leq \norm{g}_\infty$ for $\mu$-almost all $x$, which immediately gives us
+				\begin{align*}
+					\abs{f(x) + g(x)} \leq \abs{f(x)} + \abs{g(x)} \leq \norm{f}_\infty + \norm{g}_\infty
+				\end{align*}
+				$\mu$-almost everywhere
+				and thus
+				\begin{align*}
+					\norm{f + g}_\infty = \inf_{s > 0}\lr{\abs{f + g} \leq s \tn{ $\mu$-almost everywhere}} \leq \norm{f}_\infty + \norm{g}_\infty
+				\end{align*}
+			\end{enumerate}
+		\end{proof}
+		We now want to show that the $L^p$ norm defines a seminorm, which we will then easily be able to turn into a proper norm.
+		\begin{importanttheorem}{Minkowski Inequality}{}
+			Let $f, g \in \cL^p$. Then we have
+			\begin{align*}
+				\norm{f + g}_p \leq \norm{f}_p + \norm{g}_p
+			\end{align*}
+		\end{importanttheorem}
+		\begin{proof}
+				We already showed the cases $p = 1$ and $p = \infty$
+				while proving $\cL^p$ is closed under addition.
+				Thus, let $p \in (1, \infty)$.
+				Then the triangle inequality on $\bR$ gives:
+				\begin{align*}
+					\abs{f(x) + g(x)}^p 
+					&=
+					\abs{f(x) + g(x)} \cdot \abs{f(x) + g(x)}^{p-1}\\
+					&\leq (\abs{f(x)} + \abs{g(x)}) \cdot \abs{f(x) + g(x)}^{p-1}\\
+					&=
+					\abs{f(x)}\abs{f(x) + g(x)}^{p-1}
+					+
+					\abs{g(x)}\abs{f(x) + g(x)}^{p-1}
+				\end{align*}
+				Applying the Hölder inequality with $q = \frac{p}{p-1}$ gives:
+				\begin{align*}
+					&~\int_X \abs{f(x)}\abs{f(x) + g(x)}^{p-1} ~d\mu(x)\\
+					\leq
+					&~\norm{f}_p \cdot \norm{\abs{f + g}^{p-1}}_q\\
+					=
+					&~\norm{f}_p \cdot \lr(\int_X \abs{f(x) + g(x)}^{(p-1)q} ~d\mu(x))^\frac{1}{q}\\
+					=
+					&~\norm{f}_p \cdot \lr(\int_X \abs{f(x) + g(x)}^{p} ~d\mu(x))^\frac{p-1}{p}\\
+					=
+					&~\norm{f}_p \cdot \norm{f+g}_p^{p-1}
+				\end{align*}
+				Switching the roles of $f$ and $g$ similarly gives:
+				\begin{align*}
+					\int_X \abs{g(x)}\abs{f(x) + g(x)}^{p-1} ~d\mu(x)
+					\leq \norm{g}_p \cdot \norm{f+g}_p^{p-1}
+				\end{align*}
+				And putting everything together, we get:
+				\begin{align*}
+					\norm{f + g}_p^p 
+					&= \int_X \abs{f(x) + g(x)}^p ~d\mu(x)\\
+					&\leq 
+					\int_X \abs{f(x)}\abs{f(x) + g(x)}^{p-1} ~d\mu(x)
+					+
+					\int_X \abs{g(x)}\abs{f(x) + g(x)}^{p-1} ~d\mu(x)\\
+					&\leq
+					\norm{f}_p \cdot \norm{f+g}_p^{p-1}
+					+
+					\norm{g}_p \cdot \norm{f+g}_p^{p-1}\\
+					&=
+					\norm{f + g}_p \cdot \norm{f+g}_p^{p-1}
+				\end{align*}
+				From which we get our desired result by dividing out the factor of $\norm{f+g}_p^{p-1}$.
+		\end{proof}
+		\begin{importantcorollary}{}{}
+			The $\cL^p$-norm is a seminorm on $\cL^p$. In particular, we have:
+			\begin{enumerate}
+				\item $\norm{f}_p \geq 0$, with $\norm{f}_p = 0$ iff. $f = 0$ $\mu$-almost everywhere
+				\item $\norm{\lambda f}_p = \abs{\lambda} \cdot \norm{f}_p$
+				\item $\norm{f + g}_p \leq \norm{f}_p + \norm{g}_p$
+			\end{enumerate}
+		\end{importantcorollary}
+		\begin{importantcorollary}{$L^p$-space}{}
+			Define $L^p$-space to be the quotient space of $\cL^p$ under $\mu$-almost-everywhere equality. Then $\norm{\cdot}_p$ forms a proper norm on $L^p$.
+		\end{importantcorollary}
+		\begin{lemma}
+			Let $1 \leq p < \infty$. Let $u_j \in L^p$ and
+			\begin{align*}
+				f_k = \sum_{j = 1}^k u_j
+			\end{align*} 
+			Then, if $\sum_{j = 1}^\infty \norm{u_j}p < \infty$, we have:
+			\begin{enumerate}
+				\item The pointwise limit $f(x) = \lim_{k \to \infty} f_k(x)$ exists for $\mu$-almost all $x \in X$,
+				\item $f \in L^p$,
+				\item $\norm{f - f_k}_p \to 0$
+			\end{enumerate}
+		\end{lemma}
+		\begin{importantlemma}{Convergence in $L^p$}{}
+			If we have $f_k \to f$ in $L^p$ Norm for $1 \leq p \leq \infty$, then there exists a subsequence $f_{k_i}$ such that $f_{k_i} \to f$ pointwise $\mu$-almost everywhere.
+		\end{importantlemma}
+		\begin{importanttheorem}{Riesz-Fischer}{}
+			For $1 \leq p \leq \infty$, $(L^p, \norm{\cdot}_p)$ is a Banach space.
+		\end{importanttheorem}
+		\begin{definition}
+			Let $1 \leq p < \infty$. Let the sequence $(f_n) \subset L^p$ converge pointwise $\mu$-almost everywhere against the $\mu$-measurable function $f$. Let
+			\begin{align*}
+				\nu(A) := \limsup_{n \to \infty} \int_A \abs{f_n}^p ~d\mu
+			\end{align*}
+			Then we call $f_k$ \tbf{uniformly integrable} iff, for any $A \in \cA$, we have:
+			\begin{enumerate}
+				\item $\displaystyle
+				\forall \epsilon > 0 : \exists \delta > 0 : \forall A \in \cA : \mu(A) < \delta \implies \nu(A) < \epsilon
+				$
+				\item $\forall \epsilon > 0 : \exists E \in \cA: \mu(E) < \infty, \nu(X \setminus E) < \epsilon$
+			\end{enumerate}
+		\end{definition}
+		\begin{importanttheorem}{Vitali Convergence Theorem}{}
+			Let $1 \leq p < \infty$. Let the sequence $(f_n) \subset L^p$ converge pointwise $\mu$-almost everywhere against the $\mu$-measurable function $f$. Then the following are equivalent:
+			\begin{enumerate}
+				\item $f \in L^p$ and $\norm{f_n - f}_p \to 0$,
+				\item 
+				$f_k$ is uniformly integrable.
+			\end{enumerate}
+		\end{importanttheorem}
+		\begin{definition}
+			Let $\Omega \subset \bR^n$ be open. Then the \tbf{support of a function} $f : \Omega \to \bR$ is the set
+			\begin{align*}
+				\spt f := \ol{\lr{x \in \Omega : f(x) \neq 0}}
+			\end{align*}
+			The space of $k$ times continuously differentiable functions with compact support in $\Omega$ is denoted $C^k_c(\Omega)$.
+		\end{definition}
+		\begin{importanttheorem}{$C_c^0(\Omega)$ is dense in $L^p(\Omega)$}{}
+			Let $\Omega \subset \bR^n$ be open. Let $1 \leq p < \infty$. Then, for every $f \in L^p(\Omega)$, there exists a sequence $f_k$ in $C_c^0(\Omega)$ such that $\norm{f - f_k}_p \to 0$.
+		\end{importanttheorem}
 		\clearpage
 		
 		\section{Density Functions}
@@ -2330,19 +2701,19 @@
 		\end{importanttheorem}
 		\pagebreak
 		\begin{corollary}
-			The volume of the open unit ball
+			The volume of the open ball
 			\begin{align*}
-				B^n_1(0) = \lr{\vx \in \bR^n \mid \norm{\vx}_2 < 1}.
+				B^n_r(0) = \lr{\vx \in \bR^n \mid \norm{\vx}_2 < r}.
 			\end{align*}
 			is given by:
 			\begin{align*}
-				\lambda^n(B^n_1(0))
+				\lambda^n(B^n_r(0))
 				&=
-				\frac{\pi^{n/2}}{\Gamma(\frac{n}{2}+1)}
+				\frac{\pi^{n/2}}{\Gamma(\frac{n}{2}+1)} \cdot r^n
 				=
 				\begin{cases}
-					\frac{\pi^k}{k!} & n = 2k\\
-					\frac{\pi^k}{\prod_{i = 1}^k \frac{1}{2} + k - i} & n = 2k + 1
+					\frac{\pi^k}{k!} \cdot r^n & n = 2k\\
+					\frac{\pi^k}{\prod_{i = 1}^k \frac{1}{2} + k - i} \cdot r^n & n = 2k + 1
 				\end{cases}
 			\end{align*}
 		\end{corollary}
@@ -2357,14 +2728,7 @@
 			\item $\hdots$
 		\end{enumerate}
 		\begin{proof}
-				First, we want to show by induction that the volume of an $n$-dimensional ball is proportional to the $n$-th power of its radius. The case $n = 1$ is trivial, since we have 
-				\begin{align*}
-					\lambda(B_r^1(0))
-					&= \lambda((-r,r))
-					= r \cdot \lambda((-1,1))
-					= r \cdot \lambda(B_1^1(0))
-				\end{align*}
-				Now, by Cavalieri's Principle, we get:
+				By Cavalieri's principle and the linear transformation formula for the Lebesque measure, we get:
 				\begin{align*}
 					\lambda^n(B^n_r(0))
 					&=
@@ -2372,33 +2736,15 @@
 					&=
 					\int_{(-r,r)} \lambda^{n-1}\lr(B^n_r(0)^y) ~dy\\
 					&=
-					\int_{(-r,r)} \lambda^{n-1}\lr{x \in \bR^{n-1} \mid \norm{x}_2 < \sqrt{r^2-y^2}} ~dy\\
+					\int_{-1}^1 = \det\lr(\sqrt{r^2-y^2} \cdot I_n) \cdot \lambda^{n-1}\lr{x \in \bR^{n-1} \mid \norm{x}_2 < 1} ~dy\\
 					&=
-					\int_{(-r,r)} \lambda^{n-1}\lr{x \in \bR^{n-1} \mid \norm{x}_2 < r\sqrt{1-\lr(\frac{y}{r})^2}} ~dy\\
-					&\overset{IH}{=}
-					r^{n-1} \cdot \int_{(-r,r)} \lambda^{n-1}\lr{x \in \bR^{n-1} \mid \norm{x}_2 < \sqrt{1-\lr(\frac{y}{r})^2}} ~dy\\
+					r^n \cdot \int_{-1}^1 \lr(\sqrt{r^2-y^2})^{n-1} \cdot \lambda^{n-1} \lr{x \in \bR^{n-1} \mid \norm{x}_2 < 1} ~dy\\
 					&=
-					r^n \cdot \int_{-r}^r \lambda^{n-1}\lr{x \in \bR^{n-1} \mid \norm{x}_2 < \sqrt{1-\lr(\frac{y}{r})^2}} \cdot \frac{1}{r} ~dy\\
-					&\overset{g(x) := \frac{x}{r}}{=}
-					r^n \cdot \int_{\frac{-r}{r} = -1}^{\frac{r}{r} = 1} \lambda^{n-1}\lr{x \in \bR^{n-1} \mid \norm{x}_2 < \sqrt{1-u^2}} ~du\\
-					&=
-					r^n \cdot \lambda^n(B^n_1(0)),
-				\end{align*}
-				which completes the induction.
-				\newpar
-				Now, using this knowledge, we can extract a recurrence relation from one of our intermediate steps:
-				\begin{align*}
-					\lambda^n(B^n_1(0))
-					&=
-					\int_{-1}^1 \lambda^{n-1}\lr{x \in \bR^{n-1} \mid \norm{x}_2 < \sqrt{1-y^2}} ~dy\\
-					&=
-					\int_{-1}^1 \lr(\sqrt{1-y^2})^{n-1} \cdot \lambda^{n-1} \lr{x \in \bR^{n-1} \mid \norm{x}_2 < 1} ~dy\\
-					&=
-					\lambda^{n-1}(B^{n-1}_1(0)) \cdot \int_{-1}^1 \lr(\sqrt{1 - y^2})^{n-1} ~dy\\
+					r^n \cdot \lambda^{n-1}(B^{n-1}_1(0)) \cdot \int_{-1}^1 \lr(\sqrt{1 - y^2})^{n-1} ~dy
 				\end{align*}
 				We can thus get our result by solving the integral
 				\begin{align*}
-					I_n &:= \int_{-1}^1 \lr(\sqrt{1-y^2})^{n-1} ~dy\\
+					I_n &:= \int_{-1}^1 \lr(\sqrt{1-y^2})^{n-1} ~dy
 				\end{align*}
 				Substituting $\cos(\theta) = y$ gives:
 				\begin{align*}
@@ -2469,9 +2815,9 @@
 					\lambda(B_1^1(0)) = \lambda((-1,1)) = 2
 				\end{align*}
 				And, recalling the fact that $\lambda^0$ is the counting measure, we also know that \begin{align*}
-					\lambda^0(B_1^0(0)) = \lambda^0(\lr{0}) = 1
+					\lambda^0(B_1^0(0)) = \lambda^0(\lr{()}) = 1
 				\end{align*}
-				Thus, at long last, we get:
+				Thus, at long last, we can calculate the volumes of our unit balls:
 				\begin{align*}
 					\lambda^{2k}(B^{2k}_1(0)) 
 					&= (I_{2k}I_{2k-1}) \cdot (I_{2k - 2}I_{2k-3}) \cdot \hdots \cdot (I_2 I_1) \cdot \lambda^0(B^0(0))\\
@@ -2490,6 +2836,13 @@
 					&= \frac{\pi^\frac{n}{2}}{\Gamma\lr(k + \frac{1}{2} + 1)}\\
 					&= \frac{\pi^{n/2}}{\Gamma\lr(\frac{n}{2} + 1)}
 				\end{align*}
+				Which gives us
+				\begin{align*}
+					\lambda^n(B^n_r(0))
+					&=
+					\frac{\pi^{n/2}}{\Gamma(\frac{n}{2}+1)} \cdot r^n
+				\end{align*}
+				as desired.
 		\end{proof}
 		\begin{proposition}
 			The $5$-dimensional unit ball has the highest volume out of any unit ball. As the dimension increases, the volume of the unit ball converges to zero.  
@@ -2579,15 +2932,97 @@
 				\int_V f(y) ~dy = \int_{\phi^{-1}(V)} f(\phi(x)) \cdot \abs{\det D\phi(x)} ~dx.
 			\end{align*}
 		\end{importanttheorem}
-		\begin{corollary}
+		\begin{importantcorollary}{}{}
 			Let $U,V \subset \bR^n$ be open. Let $\phi : U \to \bR^n$ be $C^1$. Then if $A \subset U$ is $\lambda^n$-measurable, so is $\phi(A)$, and we have
 			\begin{align*}
 				\lambda^n(\phi(A)) = \int_A \abs{\det D\phi(x)} ~dx.
 			\end{align*}
-		\end{corollary}
+		\end{importantcorollary}
 		\begin{proof}
 			Apply the previous equation to $f = \boldone_{\phi(A)}$.
 		\end{proof}
+		\begin{importantdefinition}{Gram Matrix of a Diffeomorphism}{}
+			Let $\phi : U \to V$ be a $C^k$-diffeomorphism between open subsets of $\bR^n$. Then the \tbf{Gram matrix} $g(\phi) \in C^{k-1}(U, \bRnn)$ is given by:
+			\begin{align*}
+				g(\phi)(x) = D\phi(x)^\top D\phi(x),
+			\end{align*}
+			or equivalently:
+			\begin{align*}
+				g(\phi)_{ij}(x) = \scalar{\pdv{x_i}\phi(x)}{\pdv{x_j}\phi(x)}
+			\end{align*}
+		\end{importantdefinition}
+		Since $g(\phi)(x)$ is the product of a matrix with its own transpose, it is symmetric and strictly positive definite. This lets us alternatively write the multivariable substitution formula as:
+		\begin{align*}
+			\int_V f(y) dy = \int_{\phi^{-1}(V)} f(\phi(x)) \sqrt{\det g(\phi)(x)} ~dx
+		\end{align*}
+	
+		\clearpage
+		
+	\section{Alternative coordinate systems on $\bR^2$ and $\bR^3$}
+		\subsection{Polar Coordinates}
+		A commonly used alternative coordinate system on $\bR^2$ is given by \tbf{polar coordinates}, which describes a point $x \in \bR^2$ based on its distance $r$ from the origin and the \tit{polar angle} $\omega$ between $x$ and $(0,r)^\top$. These might be familiar from dealing with complex numbers, where any $z \in \bC$ can be represented as
+		\begin{align*}
+			z = r \cdot e^{\omega i}
+		\end{align*}
+		\begin{importantdefinition}{Polar Coordinates on $\bR^2$}{}
+			Let $U = (0, \infty) \times (0,2\pi)$ and $V = \bR^2 \setminus \lr{(x,0)^\top : x \geq 0}$. The \tbf{polar coordinate transformation} is the map:
+			\begin{align*}
+				\phi : U &\to V\\
+				\binom{r}{\omega} &\mapsto \binom{r \cos \omega}{r \sin \omega}
+			\end{align*}
+			which maps a point given in polar coordinates to its corresponding point in the cartesian coordinate system. 
+		\end{importantdefinition}
+		The Jacobian of the polar coordinate transform is:
+		\begin{align*}
+			D\phi(r,\omega)
+			&=
+			\begin{pmatrix}
+				\pdv{r} r \cos \omega & \pdv{\omega} r \cos \omega\\
+				\pdv{r} r \sin \omega & \pdv{\omega} r \sin \omega
+			\end{pmatrix}
+			\\
+			&=
+			\begin{pmatrix}
+				\cos \omega & -r \sin \omega\\
+				\sin \omega & r \cos \omega
+			\end{pmatrix}
+		\end{align*}
+		Which means the determinant is:
+		\begin{align*}
+			\det D\phi(r,\omega)
+			&=
+			\det 
+			\begin{pmatrix}
+				\cos \omega & -r \sin \omega\\
+				\sin \omega & r \cos \omega
+			\end{pmatrix}
+			\\
+			&=
+			r\cos(\omega)^2 + r\sin(\omega)^2 
+			\\
+			&= r
+		\end{align*}
+		\begin{importantcorollary}{Polar Coordinate Integral Transform}{}
+			Let $f : \bR^2 \to \bR$ be integrable. Then we have:
+			\begin{align*}
+				\int_{\bR^2} f(x,y) ~d\lambda(x,y) 
+				&=
+				\int_{0}^{2\pi} \int_{0}^\infty r \cdot f(r \cos(\omega), r\sin(\omega)) ~dr ~d\omega
+			\end{align*}
+		\end{importantcorollary}
+		\begin{proposition}
+			The inverse of the polar coordinate transform $\phi$ is:
+			\begin{align*}
+				\phi^{-1}(x,y) 
+				&=
+				\begin{cases}
+					\lr(r, ~\arccos(\frac{x}{r}))^\top & y \geq 0\\
+					\lr(r, ~2\pi - \arccos(\frac{x}{r}))^\top & y < 0
+				\end{cases}
+			\end{align*}
+			where $r = \sqrt{x^2 + y^2}$.
+		\end{proposition}
+		\pagebreak
 		\begin{example}
 			\theoremname{The Gaussian Integral}
 			We want to find the area under the Gaussian bell curve pre-normalization, i.e.
@@ -2614,7 +3049,6 @@
 			We can now calculate the two-dimensional integral using multivariable substitution to transform to polar coordinates:
 			\begin{align*}
 				\int_{\bR^2} e^{-(x^2 + y^2)} ~d\lambda^2(x,y)
-				&= \int_{(0,\infty) \times (0,2\pi)} \hdots\\
 				&= \int_{(0,\infty) \times (0,2\pi)} re^{-r^2}  ~d\lambda^2(r,\omega)\\
 				&= \int_0^\infty \lr(\int_{0}^{2\pi} re^{-r^2} ~d\omega) ~dr\\
 				&= \int_0^\infty 2\pi re^{-r^2} ~dr\\
@@ -2622,10 +3056,519 @@
 				&= 2\pi \int_0^\infty \frac{1}{2}e^{-r^2} ~2rdr\\
 				&= 2\pi \int_{-\infty}^0 \frac{1}{2} e^{s} ~ds\\
 				&= \pi \int_{-\infty}^0 e^{s} ~ds\\
-				&= \pi\\
+				&= \pi
 			\end{align*}
 			Which means that the area under the bell curve is $\sqrt{\pi}$.
 		\end{example}
+		\pagebreak
+		\begin{example} \theoremname{Beta function}
+			For $p,q \in \bR_{> 0}$, the beta function $B$ is defined as:
+			\begin{align*}
+				B(p,q) = \int_{0}^1 t^{p-1} \cdot (1-t)^{q-1} ~dt
+			\end{align*}
+			The beta function is of interest primarily because of its close relationship to the gamma function:
+			\begin{theorem}
+				We have:
+				\begin{align*}
+					B(p,q) = \frac{\Gamma(p)\Gamma(q)}{\Gamma(p+q)}
+				\end{align*}
+			\end{theorem}
+			\begin{proof}
+				Substituting $t = g(\omega) := \sin(\omega)^2$ into the definition of the beta function gives us:
+				\begin{align*}
+					g'(\omega) &= \dv{\omega} \sin(\omega)^2\\
+					&= \sin(\omega)\cos(\omega) + \cos(\omega) + \sin(\omega)\\
+					&= 2 \sin(\omega) \cos(\omega)
+				\end{align*}
+				and:
+				\begin{align*}
+					1 = \sin(\omega)^2 \Leftrightarrow \omega = \frac{\pi}{2},
+				\end{align*}
+				which means we have:
+				\begin{align*}
+					B(p,q) 
+					&= \int_{0}^1 t^{p-1} \cdot (1-t)^{q-1} ~dt\\
+					&= \int_{0}^{\pi/2} \sin(\omega)^{2p-2} \cdot (1-\sin(\omega)^2)^{q-1} \cdot 2\sin(\omega) \cos(\omega) ~d\omega\\
+					&= \int_{0}^{\pi/2} \sin(\omega)^{2p-2} \cdot \cos(\omega)^{2q-2} \cdot 2\sin(\omega) \cos(\omega) ~d\omega\\
+					&= 2 \cdot \int_{0}^{\pi/2} \sin(\omega)^{2p-1} \cdot \cos(\omega)^{2q-1} ~d\omega
+				\end{align*}
+				Meanwhile, performing a reverse substitution with $t := g(r) = r^2$ in the definition of the gamma function gives:
+				\begin{align*}
+					\Gamma(m) 
+					&= \int_0^\infty t^{m-1} e^{-t} ~dt\\
+					&= \int_0^\infty (r^2)^{m-1} e^{-r^2} \cdot 2r ~dr\\
+					&= 2 \int_0^\infty r^{2m-1} e^{-r^2} ~dr
+				\end{align*}
+				Now, we get:
+				\begin{align*}
+					B(p,q)\Gamma(p+q)
+					&=
+					2 \int_0^\infty B(p,q) \cdot r^{2p + 2q - 1} \cdot e^{-r^2} ~dr\\
+					&=
+					4 \int_0^\infty \int_0^{\pi/2} (\sin \omega)^{2p-1} \cdot r^{2p-1} \cdot (\cos \omega)^{2q-1} \cdot r^{2q-1} \cdot r \cdot e^{-r^2} ~d\omega ~dr\\ 
+					&=
+					4 \int_0^\infty \int_0^{\pi/2} (r\sin \omega)^{2p-1} \cdot (r\cos \omega)^{2q-1} \cdot r \cdot e^{-r^2} ~d\omega ~dr\\ 
+				\end{align*}
+				By applying the polar coordinate integral transform in reverse, we get:
+				\begin{align*}
+					B(p,q)\Gamma(p+q) &=
+					4 \int_0^\infty \int_0^{\pi/2} (r\sin \omega)^{2p-1} \cdot (r\cos \omega)^{2q-1} \cdot r \cdot e^{-r^2} ~d\omega ~dr\\ 
+					&=
+					4 \int_0^\infty \int_0^{\infty} x^{2p-1} \cdot y^{2q-1} \cdot e^{-\sqrt{x^2 + y^2}^2} ~dy ~dx\\ 
+					&=
+					4 \int_0^\infty \int_0^{\infty} x^{2p-1} \cdot y^{2q-1} \cdot e^{-x^2 - y^2} ~dy ~dx\\ 
+					&=
+					\lr(2 \int_0^\infty x^{2p-1} e^{-x^2} ~dx) \cdot \lr(2 \int_0^\infty y^{2q-1} e^{-y^2} ~dy)\\
+					&= \Gamma(p)\Gamma(q)
+				\end{align*}
+			\end{proof}
+		\end{example}
+		\clearpage
+		
+		\subsection{Spherical Coordinates}
+		The most natural generalization of polar coordinates to $\bR^3$ are \tit{spherical coordinates}, in which $\theta \in (0,\pi)$ describes the \tit{polar angle} between a point $P$ and the $z$-Axis and $\omega \in (0,2\pi)$ describes the \tit{azimuthal angle} between the $x$-axis and the projection $P'$ of $P$ onto the $xy$-plane.
+		We can derive spherical coordinates from two dimensional coordinates as follows:
+		\begin{enumerate}
+			\item Take a point $P = (x,y,z) \in \bR^3$. Notice that $z = r\cos(\theta)$.
+			\item Project $P$ to a point $P' = (x,y)$. The distance of $P'$ from $(0,0)$ is exactly $\rho := r \sin \theta$. Therefore, $P'$ has polar coordinates $(\rho, \omega)$, which gives us:
+			\begin{align*}
+				P = 
+				\begin{pmatrix}
+					x\\
+					y\\
+					z
+				\end{pmatrix}
+				=
+				\begin{pmatrix}
+					\rho \cos \omega\\
+					\rho \sin \omega\\
+					r \cos \theta
+				\end{pmatrix}
+				=
+				\begin{pmatrix}
+					r \sin \theta \cos \omega\\
+					r \sin \theta \sin \omega\\
+					r \cos \theta
+				\end{pmatrix}
+			\end{align*}
+		\end{enumerate}
+		\begin{importantdefinition}{Spherical Coordinates on $\bR^3$}{}
+			Let $U = (0,\infty) \times (0,\pi) \times (0, 2\pi)$ and $V = \bR^3 \setminus \lr{(x,0,z)^\top : x \geq 0}$. The \tbf{spherical coordinate transformation} is the map:
+			\begin{align*}
+				\phi : 
+				U &\to V\\
+				\begin{pmatrix}
+					r\\
+					\theta\\
+					\omega
+				\end{pmatrix}
+				&\mapsto
+				\begin{pmatrix}
+					r \sin \theta \cos \omega\\
+					r \sin \theta \sin \omega\\
+					r \cos \theta
+				\end{pmatrix}
+			\end{align*}
+			which maps a point given in spherical coordinates to its corresponding point in the cartesian coordinate system. 
+		\end{importantdefinition}
+		The Jacobian of the spherical coordinate transform is:
+		\begin{align*}
+			D\phi(r, \theta, \omega)
+			&=
+			\begin{pmatrix}
+				\pdv{r} r \sin \theta \cos \omega & \pdv{\theta} r \sin \theta \cos \omega & \pdv{\omega} r \sin \theta \cos \omega\\
+				\pdv{r} r \sin \theta \sin \omega & \pdv{\theta} r \sin \theta \sin \omega & \pdv{\omega} r \sin \theta \sin \omega\\
+				\pdv{r} r \cos \theta & \pdv{\theta} r \cos \theta &  \pdv{\omega} r \cos \theta
+			\end{pmatrix}\\
+			&=
+			\begin{pmatrix}
+				\sin \theta \cos \omega & r \cos \theta \cos \omega & -r \sin \theta \sin \omega\\
+				\sin \theta \sin \omega & r \cos \theta \sin \omega & r \sin \theta \cos \omega\\
+				\cos \theta & -r \sin \theta & 0
+			\end{pmatrix}
+		\end{align*}
+		And a long, tedious and unenlightening calculation eventually gives the determinant as:
+		\begin{align*}
+			\det D\phi(r, \theta, \omega) = r^2 \sin(\theta)
+		\end{align*}
+		Which gives us:
+		\begin{importantcorollary}{Spherical Coordinate Integral Transform}{}
+			Let $f : \bR^3 \to \bR$ be integrable. Then we have:
+			\begin{align*}
+				&\int_{\bR^3} f(x,y,z) ~d\lambda^3(x,y,z)\\ 
+				= &\int_{0}^{2\pi} \int_{0}^\pi \int_{0}^{\infty} r^2 \sin \theta \cdot f(r\sin \theta \sin \omega, r\sin \theta \cos \omega, r \cos \theta)~dr ~d\theta ~d\omega
+			\end{align*}
+		\end{importantcorollary}
+		\begin{example}
+			\theoremname{Another derivation of the volume of $B^3_R$}
+			\begin{align*}
+				\lambda^3(B^3_R)
+				&=
+				\int_{\bR^3} \boldone_{{B^3_R}}(x,y,z) ~d\lambda^3(x,y,z)\\
+				&=
+				\int_{\bR^3} \boldone_{\lr{\sqrt{x^2 + y^2 + z^2}~ <~ R}}(x,y,z) ~d\lambda^3(x,y,z)\\
+				&=
+				\int_0^{2\pi} \int_0^\pi \int_0^\infty \boldone_{\lr{r~ <~ R}}(r) \cdot r^2 \sin \theta ~dr ~d\theta ~d\omega\\
+				&=
+				\int_0^{2\pi} \int_0^\pi \int_0^\infty \boldone_{(0,R)}(r) \cdot r^2 \sin \theta ~dr ~d\theta ~d\omega\\
+				&= \lr(\int_0^\infty \boldone_{(0,R)}(r) \cdot r^2 ~dr) \cdot \lr(\int_0^\pi \sin \theta ~d\theta) \cdot \lr(\int_0^{2\pi} 1 ~d\omega)\\
+				&= \lr(\int_0^R r^2 ~dr) \cdot \lr(\int_0^\pi \sin \theta ~d\theta) \cdot \lr(\int_0^{2\pi} 1 ~d\omega)\\
+				&= \frac{1}{3} R^3 \cdot (-\cos(\pi) + \cos(0)) \cdot 2\pi\\
+				&= \frac{4}{3} \pi R^3
+			\end{align*}
+		\end{example}
+		\begin{example}
+			\theoremname{Gravitational Potential of a Sphere:}
+			The gravitational potential that a body $B \subset \bR^3$ with mass distribution $m : B \to \bR$ exerts on a point $x \in \bR^3 \setminus B$ is given by:
+			\begin{align*}
+				V(x) &= -G \cdot \int_{B} \frac{m(r)}{\norm{x - y}_2} ~d\lambda^3(y)
+			\end{align*}
+			We will derive a closed form expression for the case $B = B_R^3$.
+			If we assume that the mass distribution is rotationally symmetric, we can replace $m : \bR^3 \to \bR$ with a function $\tilde m = m(\norm{y}_2): \bR \to \bR$. We will commit a slight abuse of notation here and let $m$ be this new function $\tilde m$ from now on. Because of this rotational symmetry, we also have $V(x) = V(0,0,\norm{x})$.
+			\newpar
+			Now, if $y$ has spherical coordinates $(r, \theta, \omega)$, then assuming $y$ lies outside of our ball we can use the Pythagorean theorem to get:
+			\begin{align*}
+				\norm{x-y}_2^2 
+				&= (\norm{x}_2 - r \cos \theta)^2 + r^2 \sin^2 \theta\\
+				& = \norm{x}_2^2 + r^2 - 2r \norm{x}_2 \cos \theta
+			\end{align*}
+			Thus, we have:
+			\begin{align*}
+				V(x) 
+				&= -G \cdot \int_{B_R^3} \frac{m(r)}{\norm{x - y}_2} ~d\lambda^3(y)\\
+				&= -G \int_0^{2\pi} \int_0^\pi \int_0^R \lr(\frac{m(r)}{\sqrt{\norm{x}_2^2 + r^2 - 2r \norm{x}_2 \cos \theta}} \cdot r^2 \sin \theta) ~dr ~d\theta ~d\omega\\
+				&= -2\pi G \int_0^R r^2 \cdot m(r) \cdot \lr(\int_0^\pi \frac{\sin \theta}{\sqrt{\norm{x}_2^2 + r^2 - 2r \norm{x}_2 \cos \theta}} ~d\theta) ~dr
+			\end{align*}
+			Substituting $t = g(\theta) = -\cos \theta$ into the inner integral, we get:
+			\begin{align*}
+				&\int_0^\pi \frac{\sin \theta}{\sqrt{\norm{x}_2^2 + r^2 - 2r \norm{x}_2 \cos \theta}} ~d\theta\\
+				=
+				&\int_{-1}^1 \frac{1}{\sqrt{\norm{x}_2^2 + r^2 + 2r \norm{x}_2t}} ~dt\\
+				=
+				&\lr[\frac{1}{r \cdot \norm{x}_2} \cdot \sqrt{\norm{x}_2^2 + r^2 + 2r \norm{x}_2t}]^{t = 1}_{t = -1}\\
+				&= \frac{1}{r \cdot \norm{x}_2} \cdot \lr(\sqrt{\norm{x}_2^2 + r^2 + 2r \norm{x}_2}
+				- \sqrt{\norm{x}_2^2 + r^2 - 2r \norm{x}_2})\\
+				&= \frac{1}{r \cdot \norm{x}_2} \cdot ((\norm{x}_2 + r) - \norm{x}_2 - r)\\
+				&= \frac{2}{\norm{x}_2}
+			\end{align*}
+			Therefore, we have:
+			\begin{align*}
+				V(x) = \frac{4\pi}{\norm{x}_2} \cdot \int_0^R m(r) r^2 ~dr
+			\end{align*}
+			Now, we can once again use the rotational symmetry of $m$ to describe the total mass $M$ of our body in terms of spherical coordinates:
+			\begin{align*}
+				M 
+				&= \int_{B^3_R(0)} m(y) ~d\lambda^3(y)\\
+				&= \int_0^{2\pi} \int_0^\pi \int_0^R m(r) r^2 \sin \theta ~dr ~d\theta ~d\omega\\
+				&= 4 \pi \int_0^R m(r) r^2 ~dr
+			\end{align*}
+			Thus, the total mass distribution of our sphere is simply:
+			\begin{align*}
+				V(x) = -\frac{GM}{\norm{x}}
+			\end{align*}
+			which is exactly the same mass distribution we would get if we concentrated the entire mass of our sphere at its center. This relation is part of a theorem in classical mechanics known as the \tbf{shell theorem}.
+		\end{example}
+		\clearpage
+		\subsection{Cylindrical Coordinates}
+		Alternatively, one can trivially extend polar coordinates into three dimensions by simply leaving the $z$ coordinate unchanged, leading to \tit{cylindrical coordinates}:
+		\begin{importantdefinition}{Cylindrical Coordinates on $\bR^3$}{}
+				Let $U = (0,\infty) \times (0, 2\pi) \times \bR$ and $V = \bR^3 \setminus \lr{(x,0,z)^\top : x \geq 0}$. The \tbf{spherical coordinate transformation} is the map:
+			\begin{align*}
+				\phi : 
+				U &\to V\\
+				\begin{pmatrix}
+					r\\
+					\omega\\
+					z
+				\end{pmatrix}
+				&\mapsto
+				\begin{pmatrix}
+					r \cos \omega\\
+					r \sin \omega\\
+					z
+				\end{pmatrix}
+			\end{align*}
+			which maps a point given in cylindrical coordinates to its corresponding point in the cartesian coordinate system. 
+		\end{importantdefinition}
+		Since the cylindrical coordinate transform leaves the $z$ coordinate unchanged, its
+		Jacobian and its determinant end up being almost identical:
+		\begin{align*}
+			D\phi(r,\omega,z)
+			&=
+			\begin{pmatrix}
+				\pdv{r} r \cos \omega & \pdv{\omega} r \cos \omega & \pdv{z} r \cos \omega\\
+				\pdv{r} r \sin \omega & \pdv{\omega} r \sin \omega & \pdv{z} r \sin \omega\\
+				\pdv{r} z & \pdv{\omega} z & \pdv{z} z
+			\end{pmatrix}
+			\\
+			&=
+			\begin{pmatrix}
+				\cos \omega & -r \sin \omega & 0\\
+				\sin \omega & r \cos \omega & 0\\
+				0 & 0 & 1
+			\end{pmatrix}
+		\end{align*}
+		
+		\begin{align*}
+			\det D\phi(r,\omega,z)
+			&=
+			\det 
+			\begin{pmatrix}
+				\cos \omega & -r \sin \omega & 0\\
+				\sin \omega & r \cos \omega & 0\\
+				0 & 0 & 1
+			\end{pmatrix}
+			\\
+			&=
+			\det 
+			\begin{pmatrix}
+				\cos \omega & -r \sin \omega\\
+				\sin \omega & r \cos \omega
+			\end{pmatrix}
+			\\
+			&=
+			r\cos(\omega)^2 + r\sin(\omega)^2 
+			\\
+			&= r
+		\end{align*}
+		\begin{importantcorollary}{Cylindrical Coordinate Integral Transform}{}
+			Let $f : \bR^2 \to \bR$ be integrable. Then we have:
+			\begin{align*}
+				\int_{\bR^3} f(x,y,z) ~d\lambda(x,y,z) 
+				&=
+				\int_{\bR }\int_{0}^{2\pi} \int_{0}^\infty r \cdot f(r \cos(\omega), r\sin(\omega), z) ~dr ~d\omega ~dz
+			\end{align*}
+		\end{importantcorollary}
+		\begin{proposition}
+			The inverse of the cylindrical coordinate transform $\phi$ is:
+			\begin{align*}
+				\phi^{-1}(x,y,z) 
+				&=
+				\begin{cases}
+					\lr(r, ~\arccos(\frac{x}{r}), ~z)^\top & y \geq 0\\
+					\lr(r, ~2\pi - \arccos(\frac{x}{r}), ~z)^\top & y < 0
+				\end{cases}
+			\end{align*}
+			where $r = \sqrt{x^2 + y^2}$.
+		\end{proposition}
+		\begin{importanttheorem}{Volume of a Solid of Revolution}{}
+			Let $S$ be a solid constructed by rotating a function $\rho(z)$ around the $z$ axis, i.e.
+			\begin{align*}
+				S = \lr{(x,y,z) \in \bR^3 : x^2 + y^2 < \rho(z)^2}
+			\end{align*}
+			Then we have:
+			\begin{align*}
+				\lambda^3(S) = \pi \int_\bR \rho(z)^2 ~d\lambda^1(z)
+			\end{align*}
+		\end{importanttheorem}
+		\begin{proof}
+			\begin{align*}
+				\lambda^3(S) 
+				&= \int_{\bR^3} \boldone_{\lr{x^2 + y^2~ <~ \rho(z)^2}}(x,y,z) ~d\lambda^3(x,y,z)\\
+				&= \int_{\bR} \int_{0}^{2\pi} \int_0^\infty r \cdot \boldone_{\lr{r^2~ <~ \rho(z)^2}}(r,\omega,z) ~dr ~d\omega ~dz\\
+				&= \int_{\bR} \int_{0}^{2\pi} \int_0^\infty r \cdot \boldone_{\lr{r~ <~ \rho(z)}}(r,\omega,z) ~dr ~d\omega ~dz\\
+				&= \int_{\bR} \int_{0}^{2\pi} \int_0^{\rho(z)} r ~dr ~d\omega ~dz\\
+				&= \int_{\bR} \int_{0}^{2\pi} \frac{1}{2} \rho(z)^2 ~d\omega ~dz\\
+				&= \int_{\bR} \pi \rho(z)^2 ~dz\\
+				&= \pi \int_{\bR} \rho(z)^2 ~dz
+			\end{align*}
+		\end{proof}
+		\clearpage
+		
+		\section{The Surface Area Measure}
+		\begin{definition}
+			Let $U \supset \bR^n$ be open. We call a map $f : U \to \bR^{n+k}$ an \tit{immersion} iff $f$ is continuously differentiable and $ Df(x)$ is invertible.
+		\end{definition}
+		\begin{definition}
+			Let $M \subset \bR^{n+k}$ be an $n$-dimensional $C^1$ submanifold. Then a \tit{local parametrization of $M$} is an injective immersion $f : \bR^n \supset U \to M \subset \bR^{n+k}$
+		\end{definition}
+		\begin{importantdefinition}{Gram Matrix}{}
+			Let $U \subset \bR^n$ and $f : U \to \bR^{n+k}$. Then the \tit{Gram matrix} $g_f(x)$ is the matrix
+			\begin{align*}
+				g_f(x) = Df(x)^\top Df(x)
+			\end{align*}
+		\end{importantdefinition}
+		Our goal now is to find a sensible definition of \tit{surface area}, i.e. of an $n$-dimensional measure associated with an object embedded into $n+k$-dimensional space.
+		\begin{importantcorollary}{Area of an Embedded Diffeomorphism of a Set}{}
+			Let $f = S \circ \phi$, where $\phi : U \to V$ is a diffeomorphism with $U,V \subset \bR^n$ and $S$ is a linear isometry. Then we have
+			\begin{align*}
+				\lambda^n(\phi(E)) = \int_E \sqrt{\det g_f}
+			\end{align*}
+		\end{importantcorollary}
+		This theorem suggests that it is sensible to use the same definition for arbitrary immersions:
+		\begin{importantdefinition}{Area of an Immersion of a Set}{}
+			Let $f \in C^1(U, \bR^{n+k})$ be an $n$-dimensional immersion. Let $E \subset U$ be $\lambda^n$-measurable. Then the $n$-dimensional area of $f(E)$ is given by:
+			\begin{align*}
+				A(f,E) = \int_E \sqrt{\det g_f}
+			\end{align*}
+		\end{importantdefinition}
+		$\sqrt{\det g_f}$ is known as the \tit{Jacobian of $f$}, and often denoted $Jf$, but I dislike notation that hides the actual calculation being done behind multiple layers of nested notation and will thus be sticking to $\sqrt{\det g_f}$.
+		\begin{importantcorollary}{Length of a Regular Curve}{}
+			An Immersion $f : I = (a,b) \to \bR^n$ is known as a \tit{regular curve}. The one-dimensional area of the curve, i.e. its length, is given by
+			\begin{align*}
+				L(f) := A(f,I) = \int_a^b \norm{Df(t)}_2 ~dt
+			\end{align*}
+		\end{importantcorollary}
+		\begin{proof}
+			We have:
+			\begin{align*}
+				Df(t) = 
+				\begin{pmatrix}
+					f_1'(t)\\
+					\vdots\\
+					f_n'(t)
+				\end{pmatrix}
+			\end{align*}
+			and thus
+			\begin{align*}
+				g_f(t) = Df(t)^\top Df(t) = \norm{Df(t)}_2^2
+			\end{align*}
+		\end{proof}
+		Note that if some areas of the curve are covered multiple times, then this length formula counts them multiple times as well.
+		\begin{importantcorollary}{Area of a Regular Surface}{}
+			An immersion $f : U \supset \bR^2 \to \bR^3$, with $U$ open, is known as a \tit{regular surface}. Its area is given by
+			\begin{align*}
+				A(f) := A(f,U) 
+				&= \int_U \sqrt{\norm{\pdv{x}f}_2^2 \cdot \norm{\pdv{y}f}_2^2 - \scalar{\pdv{x} f}{\pdv{y}f}^2} ~d\lambda^2(x,y)\\
+				&= \int_U \norm{\pdv{x}f \times \pdv{y} f} ~d\lambda^2(x,y)\\
+			\end{align*}
+		\end{importantcorollary}
+		\begin{proof}
+			We have
+			\begin{align*}
+				Df = 
+				\begin{pmatrix}
+					\pdv{x} f(x,y) & \pdv{y} f
+				\end{pmatrix},
+			\end{align*}
+			therefore our Gram matrix is
+			\begin{align*}
+				g_f
+				&=
+				\begin{pmatrix}
+					\norm{\pdv{x}f}_2^2 & \scalar{\pdv{x} f}{\pdv{y}f}_2\\
+					\scalar{\pdv{x} f}{\pdv{y}f} & \norm{\pdv{y}f}_2^2
+				\end{pmatrix},
+			\end{align*}
+			giving our desired result for $\sqrt{\det g_f}$.´
+		\end{proof}
+		\begin{importanttheorem}{Surface Measure}{}
+			Let $M$ be an $n$-dimension $C^1$-submanifold of $\bR^{n+k}$ locally parametrized by $f : U \to M$. Let $E \subset M$. Then there exists a measure $\omega_M$ such that
+			\begin{align*}
+				\omega_M(E) = A(f,E)
+			\end{align*}
+		\end{importanttheorem}
+
+		\begin{importanttheorem}{Surface of Revolution}{}
+			Let $S$ be a solid of revolution generated by $\rho(z)$. Then the surface area of $S$ is:
+			\begin{align*}
+				\omega_S(S) = 2\pi \int_\bR \rho(z) \sqrt{1 + \lr(\dv{z} \rho(z))^2} dz
+			\end{align*}
+		\end{importanttheorem}
+		\begin{proof}
+			This follows from our formula for the surface area of a regular surface.
+			However, as additional practice, let us derive the formula from scratch.
+			We can parametrize $S$ up to a zero set via:
+			\begin{align*}
+				f: \binom{\theta}{z} \mapsto \trinom{\rho(z) \cos(\theta)}{\rho(z) \sin(\theta)}{z}
+			\end{align*}
+			Which gives us:
+			\begin{align*}
+				Df(\theta,z)
+				&=
+				\begin{pmatrix}
+					\pdv{\theta} \rho(z) \cos(\theta) & \pdv{z} \rho(z) \cos(\theta)\\
+					\pdv{\theta} \rho(z) \sin(\theta) & \pdv{z} \rho(z) \sin(\theta)\\
+					\pdv{\theta} z & \pdv{z} z
+				\end{pmatrix}\\
+				&=
+				\begin{pmatrix}
+					-\rho(z) \sin(\theta) & \cos(\theta) \cdot \pdv{z} \rho(z)\\
+					\rho(z) \cos(\theta) & \sin(\theta) \cdot \pdv{z} \rho(z)\\
+					0 & 1
+				\end{pmatrix}
+			\end{align*}
+			This gives us the Gram matrix:
+			\begin{align*}
+				g_f(\theta,z) &=
+				\begin{pmatrix}
+					-\rho(z) \sin(\theta) & \rho(z) \cos(\theta) & 0\\
+					\cos(\theta) \cdot \pdv{z} \rho(z)
+					 & \sin(\theta) \cdot \pdv{z} \rho(z)& 1
+				\end{pmatrix}
+				\cdot
+				\begin{pmatrix}
+					-\rho(z) \sin(\theta) & \cos(\theta) \cdot \pdv{z} \rho(z)\\
+					\rho(z) \cos(\theta) & \sin(\theta) \cdot \pdv{z} \rho(z)\\
+					0 & 1
+				\end{pmatrix}\\
+				&=
+				\begin{pmatrix}
+					\rho(z)^2 \cdot (\sin^2(\theta) + \cos^2(\theta)) & \stack{-\rho(z)\sin(\theta)\cos(\theta) \dv{z}\rho(z)}
+					{+ \rho(z)\sin(\theta)\cos(\theta) \dv{z}\rho(z)}\\
+					\stack{-\rho(z)\sin(\theta)\cos(\theta) \dv{z}\rho(z)}
+					{+ \rho(z)\sin(\theta)\cos(\theta) \dv{z}\rho(z)} & (\cos^2(\theta) + \sin^2(\theta)\lr(\pdv{z} \rho(z))^2 + 1
+				\end{pmatrix}\\
+				&=
+				\begin{pmatrix}
+					\rho(z)^2 & 0\\
+					0 & \lr(\pdv{z} \rho(z))^2 + 1
+				\end{pmatrix}
+			\end{align*}
+			and thus:
+			\begin{align*}
+				\sqrt{\abs{\det g_f(\theta,z)}} 
+				&= \sqrt{\rho(z)^2\lr(\pdv{z} \rho(z))^2 + \rho(z)^2}\\
+				&= \rho(z)\sqrt{1 + \pdv{z} \rho(z))^2}
+			\end{align*}
+			Which leaves us with:
+			\begin{align*}
+				\omega_S(S) 
+				&= \int_0^{2\pi} \int_{\bR} \rho(z)\sqrt{1 + \pdv{z} \rho(z))^2} ~dz ~d\theta\\
+				&= 2\pi \int_{\bR} \rho(z)\sqrt{1 + \pdv{z} \rho(z))^2} ~dz
+			\end{align*}
+		\end{proof}
+		\begin{example}
+			\theoremname{Gabriel's Horn}
+			We want to show that the solid of rotation $G$ generated by $z \in [1,\infty)$ and $\rho(z) = \frac{1}{z}$ has finite volume, but infinite surface area.
+			\begin{enumerate}
+				\item We already showed in the section on cylindrical coordinates that the volume is simply:
+				\begin{align*}
+					\lambda^3(G) 
+					&= \pi \cdot \int_1^\infty \rho(z)^2 ~dz\\
+					&= \pi \cdot \int_1^\infty \frac{1}{z^2} ~dz\\
+					&= -\frac{\pi}{2} \cdot \lr[\frac{1}{z}]_{z = 1}^{z = \infty}\\
+					&= -\frac{\pi}{2} \cdot (0 - 1)\\ 
+					&= \frac{\pi}{2}
+				\end{align*}
+				\item We have just shown that the surface area is given by:
+				\begin{align*}
+					\omega_S(S) 
+					&= 2\pi \int_{\bR} \rho(z)\sqrt{1 + \pdv{z} \rho(z))^2} ~dz\\
+					&= 2\pi \int_{1}^\infty \frac{1}{z}\sqrt{1 - \frac{1}{z^2}} ~dz\\
+					&> 2\pi \int_{1}^\infty \frac{1}{z} ~dz\\
+					&= 2\pi (\ln(\infty) - \ln(1))\\
+					&= \infty
+				\end{align*}
+			\end{enumerate}
+		\end{example}
+		\begin{importanttheorem}{Surface Integral}{}
+			Let $M \subset \bR^{n+k}$ be an $n$-dimensional $C^1$ submanifold of $\bR^{n+k}$, and let $M = \bigsqcup_{i \in I} M_i$ be a decomposition of $M$ into countably many pairwise disjoint measure sets such that $M_i \subset V_i$ for a local parametrization $f_i : U_i \to V_i$. Then for any measurable function $u : M \to \barR$, we have:
+			\begin{align*}
+				\int_M u(x) ~d\omega_M(x) = \sum_{i \in I} \int_{f_i^{-1}(M_i)} u(f_i(x)) \cdot \abs{\sqrt{\det g_{f_i}(x)}} ~d\lambda^n(x)
+			\end{align*}
+		\end{importanttheorem}
+		In particular, if we can find a local parametrization $f : U \to V$ such that $M \setminus V$ is a zero set, we have:
+		\begin{align*}
+			\int_M u(x) ~d\omega_M(x) = \int_{f^{-1}(M)} u(f(x)) \cdot \abs{\det Df(x)} ~d\lambda^n(x)
+		\end{align*}
+		\clearpage
+		
+		\section{The Divergence Theorem}
+		\clearpage
+		
+		\section{Convolutions}
+		
 	\chapter{Generalizing even further}
 		\section{The Bochner Integral}
 		\section{The Pettis Integral}	
