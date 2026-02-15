@@ -766,11 +766,11 @@
 		\begin{corollary}
 			Let $\id : \bR^d \to \bR^d$ be the identity function. We have
 			\begin{align*}
-				\div~ (\id) = d,
+				\div(\id) = d,
 			\end{align*}
-			which means that, in cases where the notation is less formal, we have
+			or, if the argument of the function is included:
 			\begin{align*}
-				\div~ x = d.
+				\div(x) = \div(\id(x)) = d.
 			\end{align*}
 		\end{corollary}
 		\begin{importanttheorem}{Linearity of Divergence}{}
@@ -792,14 +792,15 @@
 		\begin{importanttheorem}{Product Rule for Divergence}{}
 			Let $f : \bR^n \to \bR$. Let $G : \bR^n \to \bR^n$. Then we have:
 			\begin{align*}
-				\div(f(x) \cdot G(x))
+				\div(f \cdot G)
 				=
-				f(x) \cdot \div(G(x))
+				f \cdot \div(G)
 				+
-				\scalar{\grad f(x)}{G(x)}
+				\scalar{\grad f}{G}
 			\end{align*}
 		\end{importanttheorem}
 		\begin{proof}
+			This follows from the standard product rule of differentiation:
 			\begin{align*}
 				\div(f(x) \cdot G(x))
 				&= \sum_{i = 1}^n \pdv{x_i} f(x) G_i(x)\\
@@ -1674,9 +1675,9 @@
 		\end{align*}
 		i.e. the Lebesque outer measure of $E$ is the greatest lower bound of the measures of all coverings of $E$ by cuboids.
 	\end{definition}
-	\begin{corollary}
+	\begin{theorem}
 		We have $\lambda^0 = \card$ - the zero-dimensional lebesque measure is the counting measure.
-	\end{corollary}
+	\end{theorem}
 	\begin{proof}
 		$\bR^0$ is by definition cartesian product of $\bR$ with a set of cardinality $0$ i.e. the empty set, as its index set:
 		\begin{align*}
@@ -1729,20 +1730,16 @@
 		\label{thm:lineartransformationequation}
 		Let $S \in \bRnn$. Then for all $E \subset \bR^n$, we have:
 		\begin{align*}
-			\lambda^n(S(E)) = \abs{\det(S)}\lambda^n(E)
+			\lambda^n(S(E)) = \abs{\det(S)} \cdot \lambda^n(E)
 		\end{align*}
 	\end{importanttheorem}
 	\begin{importantdefinition}{Smith-Volterra-Cantor Set}{}
 		The Smith-Volterra-Cantor set is the set obtained by removing the middle $1/8$ of the interval $[0,1]$, and then iteratively removing the middle $1/8$ of any remaining intervals.
 	\end{importantdefinition}
-	\begin{importanttheorem}{Empty interior does not imply zero measure}{}
-		The Smith-Volterra-Cantor set has empty interior but positive measure.
-	\end{importanttheorem}
 	\begin{importanttheorem}{Compact does not imply Jordan measurable}{}
 		The Smith-Volterra-Cantor set is compact, but not Jordan measurable.
 	\end{importanttheorem}
 	\chapter{Measurable Functions}
-	\section{Measurable Functions}
 	\begin{importantdefinition}{Measurable Functions}{}
 		Let $(X, \cA)$ and $(Y, \cB)$ be measurable spaces. Then we call a map $f : X \to Y$ \tbf{$\cA$-$\cB$-measurable}, or just \tbf{measurable}, if the preimage of every measurable set is again measurable, i.e.
 		\begin{align*}
@@ -2062,7 +2059,7 @@
 				\displaystyle \int_N f ~d\mu = 0.
 			\end{align*} 
 		\end{corollary}
-		\begin{importantdefinition}{Integrable Function}{}
+		\begin{importantdefinition}{Integrable function}{}
 			We call a function $f : X \to \barR$ $\tbf{integrable}$ with regards to a measure $\mu$ if it is $\mu$-measurable and
 			\begin{align*}
 				\int_X f~d\mu \in \bR
@@ -2075,7 +2072,7 @@
 			\end{align*}
 		\end{proposition}
 		\begin{importanttheorem}
-			{Monotonicity of the Lebesque Integral}{}
+			{Monotonicity of the Lebesque integral}{}
 			Let $\mu$ be an outer measure on $X$ such that $f,g : X \to \barR$ are $\mu$-measurable. Then if $f \leq g$ $\mu$-almost everywhere and $\int_X f ~d\mu > -\infty$, then the integral of $g$ exists and we have
 			\begin{align*}
 				\int_X f ~d\mu \leq \int_X g ~d\mu
@@ -2124,7 +2121,7 @@
 				= 	\sup_{n \in \bN} \int_X f_n ~d\mu
 			\end{align*}
 		\end{importanttheorem}
-		\begin{importanttheorem}{Linearity of the Lebesque Integral}{}
+		\begin{importanttheorem}{Linearity of the Lebesque integral}{}
 			Let $\mu$ be a measure on $X$. Let $f,g : X \to \barR$ and $\alpha, \beta \in \bR$. Then we have:
 			\begin{align*}
 				\int_X (\alpha f + \beta g) ~d\mu = \alpha \int_X f ~d\mu + \beta \int_X g ~d\mu
@@ -2190,7 +2187,7 @@
 				\liminf_{n \to \infty} \int_X f_n ~d\mu
 			\end{align*}
 		\end{importanttheorem}
-		\begin{importanttheorem}{Lebesque}{}
+		\begin{importanttheorem}{Lebesque's Dominated Convergence Theorem}{}
 			Let $f$, $f_k$ be $\mu$-measurable functions such that $f_k \to f$ $\mu$-almost everywhere. Assume there exists a nonnegative Function $g \in \cL^1$ such that $\sup_k \abs{f_k} \leq g$ $\mu$-almost everywhere. Then we have $f \in \cL^1$ and
 			\begin{align*}
 				\int_X f ~d\mu = \lim_{k \to \infty} \int_X f_k ~d\mu
@@ -2262,7 +2259,7 @@
 		\begin{importanttheorem}{$L^\infty$-Norm}{}
 			We have
 			\begin{align*}
-				\lim_{p \to \infty} \norm{f}_p = \inf_{s > 0} \mu\lr{\abs{f} > s}
+				\norm{f}_\infty := \lim_{p \to \infty} \norm{f}_p = \inf_{s > 0} \mu\lr{\abs{f} > s}
 			\end{align*}
 		\end{importanttheorem}
 		\begin{lemma}\theoremname{Young Inequality}{}
@@ -2325,7 +2322,7 @@
 					\norm{f}_1 \cdot \norm{g}_\infty
 				\end{align*}
 				
-				\item[$p > 1$:] Assume that $\norm{f}_p \cdot \norm{g}_q > 0$. Then, applying the Young inequality with $a = \abs{f(x)}/\norm{f}_p$ and $b = \abs{g(x)}/\norm{g}_q$, we get
+				\item[$p > 1$:] Assume that $\norm{f}_p \cdot \norm{g}_q > 0$. Then, applying the Young inequality with $\displaystyle a = \frac{\abs{f(x)}}{\norm{f}_p}$ and $\displaystyle b = \frac{\abs{g(x)}}{\norm{g}_q}$, we get
 				\begin{align*}
 					\frac{f(x)g(x)}{\norm{f}_p\norm{g}_q}
 					&\leq
@@ -2569,7 +2566,7 @@
 		\begin{importanttheorem}
 			{Lebesque's decomposition theorem}{} Let $\mu$ and $\nu$ be measures on $(X, \cA)$, and let $\nu$ be $\sigma$-finite. Then there exists a unique decomposition $\nu = \nu_a + \nu_s$ such that $\nu_a \ll \mu$ and $\nu_a \perp \mu$.
 		\end{importanttheorem}
-	\chapter{Integration over Immersed Manifolds}
+	\chapter{Integration in $\bR^n$}
 		\section{Products of Measure Spaces}
 		In this section, we will be interested in finding a canonical $\sigma$-Algebra on cartesian products of measurable spaces.
 		\begin{importantdefinition}{General Products in Category Theory}{}
