@@ -8,7 +8,7 @@
 % emma's long list of custom macros and universally used packages
 \include{./macros-and-packages-en.tex}
 
-% colored box behind proofs
+% Mark proofs by a vertical line on the left side
 \tcolorboxenvironment{proof}{
 	colback=white,
 	boxrule=0pt,
@@ -54,7 +54,7 @@
 }
 \fi
 
-\newtcbtheorem[number within=lemma]{importanttheorem}{Theorem}{colback=white,
+\newtcbtheorem[use counter = lemma, number within = section]{importanttheorem}{Theorem}{colback=white,
 	colframe=black,
 	sharp corners,
 	enhanced,
@@ -72,7 +72,25 @@
 	boxrule=1.5pt
 }{th}
 
-\newtcbtheorem[number within=lemma]{importantdefinition}{Definition}{colback=white,
+\newtcbtheorem[use counter = lemma, number within = section]{importantdefinition}{Definition}{colback=white,
+	colframe=black,
+	sharp corners,
+	enhanced,
+	attach boxed title to top left ={
+		xshift = 8pt, 
+		yshift = -\tcboxedtitleheight/2,
+		yshifttext=-\tcboxedtitleheight/2
+	},
+	%minipage boxed title*=-3cm,
+	boxed title style={
+		colframe = white
+	},
+	colbacktitle=white,
+	coltitle=black,
+	fonttitle=\bfseries,
+	boxrule=1.5pt}{th}
+
+\newtcbtheorem[use counter = lemma, number within = section]{importantcorollary}{Corollary}{colback=white,
 	colframe=black,
 	sharp corners,
 	enhanced,
@@ -91,26 +109,7 @@
 	boxrule=1.5pt
 }{th}
 
-\newtcbtheorem[number within=lemma]{importantcorollary}{Corollary}{colback=white,
-	colframe=black,
-	sharp corners,
-	enhanced,
-	attach boxed title to top left ={
-		xshift = 8pt, 
-		yshift = -\tcboxedtitleheight/2,
-		yshifttext=-\tcboxedtitleheight/2
-	},
-	%minipage boxed title*=-3cm,
-	boxed title style={
-		colframe = white
-	},
-	colbacktitle=white,
-	coltitle=black,
-	fonttitle=\bfseries,
-	boxrule=1.5pt
-}{th}
-
-\newtcbtheorem[number within=lemma]{importantlemma}{Lemma}{colback=white,
+\newtcbtheorem[use counter = lemma, number within = section]{importantlemma}{Lemma}{colback=white,
 	colframe=black,
 	sharp corners,
 	enhanced,
@@ -834,7 +833,17 @@
 		\begin{definition}
 			We say a map is "$\cC^n$" if its first $n$ derivatives exist and are continuous. If $f \in \cC^n$ is bijective such that $f^{-1} \in \cC^n$, then we call $f$ a \tbf{$\cC^n$-diffeomorphism}.
 		\end{definition}
-		Under the convention that the $0$th derivative of $f$ is $f$ itself, a $C^0$-diffeomorphism is the same thing as a homeomorphism.
+		Under the convention that the $0$th derivative of $f$ is $f$ itself, a $C^0$-diffeomorphism is the same thing as a homeomorphism. If a source uses the term "diffeomorphism" without specifying the degree $n$, it is generally assumed that $n = 1$.
+		\begin{corollary}
+			A linear map is a $C^1$-diffeomorphism if and only if it is an isomorphism.
+		\end{corollary}
+		\begin{proof}
+			Let $\phi(x) = Ax$ be a linear map.
+			\begin{enumerate}
+				\item If $\phi(x)$ is a $C^1$-diffeomorphism, it must be invertible, and thus an isomorphism.
+				\item Since $\phi$ is linear, it is continuously differentiable with $D\phi(x) = A$. If $\phi$ is an isomorphism, then the inverse $\phi^{-1}(x)$ is also linear, and thus also continuosly invertible. Thus, $\phi$ is a $C^1$-diffeomorphism.
+			\end{enumerate}
+		\end{proof}
 		\begin{importantdefinition}{$C^n$-Manifold}{}
 			Hi
 		\end{importantdefinition}
@@ -842,19 +851,52 @@
 			Let $M \subset \bR^{n+k}$. Then the following are equivalent:
 			\begin{enumerate}
 				\item $M$ is an $n$-dimensional $C^r$-submanifold of $\bR^{n+k}$
-				\item $M$ is locally given as a $C^r$-level set, i.e. For every $p \in M$ there exists an open set $\Omega \subset \bR^{n+k}$ and an $r$-times continuously differentiable function $f : \Omega \to \bR^k$ such that:
+				\item $M$ is locally given as a $C^r$-level set, i.e. For every $p \in M$ there exists an open neighbourhood $\Omega \subset \bR^{n+k}$ and an $r$-times continuously differentiable function $f : \Omega \to \bR^k$ such that:
 				\begin{enumerate}
-					\item $\displaystyle M \cap \Omega = \lr{x \in \Omega : f(x) = 0}$
+					\item $\displaystyle M \cap \Omega = \lr{x \in \Omega : f(x) = \vec0_k}$
 					\item For all $x \in \Omega$, we have $\rank Df(x) = k$.
 				\end{enumerate}
-				\item $M$ 
+				\item For every $p \in M$, there exists an open neighbourhood $U \times V \subset \bR^n \times \bR^k$, an $r$-times continuously differentiable map $g : R^n \supset U \to V \subset \bR^k$ and a coordinate permutation $\sigma : \bR^{n+k} \to \bR^{n+k}$ such that
+				\begin{align*}
+					M \cap \sigma(U \times V) = \sigma\lr{(x, g(x)) : x \in U}
+				\end{align*}
 			\end{enumerate}
 		\end{importanttheorem}
+		\begin{proof}
+			\phantom{}
+			\begin{enumerate}
+				\item[] $1 \implies 2$: Assume that $m$ is an $n$-dimensional $C^r$ submanifold of $\bR^{n+k}$. By definition, there exists a $C^r$ diffeomorphism $\phi : \bR^{n+k} \to \bR^{n+k}$ such that for every point $p$, there exists an open neighborhood $\Omega \subset \bR^{n+k}$ such that
+				\begin{align*}
+					\phi(M \cap \Omega) = \lr{x \in \phi(\Omega) \mid x \in \bR^n \times \lr{\vec0_k}}
+				\end{align*}
+				Since $\phi$ is a diffeomorphism, $D\phi(x)$ is invertible for all $x \in \Omega$. Let $\pi^\bot : \bR^{n} \times \bR^k \to \bR^k$ be the orthogonal projection onto $\bR^k$. Let $f = \pi^\bot \circ \phi$. Then, for any $x \in \Omega$, we get:
+				\begin{align*}
+					\lr{x \in \Omega : f(x) = 0}
+					&= \lr{x \in \Omega : \phi(x) \in \bR^n \times \lr{\vec 0_k}}\\
+					&= \phi^{-1}(\lr{x \in \Omega : x \in \bR^n \times \lr{\vec 0_k}})\\
+					&= M \cap \Omega
+				\end{align*}
+				And by the chain rule, $f$ is $r$-times differentiable and has rank $k$.
+				\item[] $2 \implies 3$: Let $f$ be as in $2$. Then we can choose $\sigma$ such that $D_yf(x)$ is invertible, after which $3$ follows from the implicit function theorem. 
+				\item[] $3 \implies 1$: Follows with $\phi(x,y) := \sigma(x, y - g(x))$, which is a $C^r$-diffeomorphism by the inverse function theorem.
+			\end{enumerate}
+		\end{proof}
+		\begin{definition}
+			Let $M \subset \bR^{n+k}$. We define the \tbf{relative Topology on $M$} by letting a set $V \subset M$ be open in $M$ iff. for every $p \in M$ there exists an $\epsilon > 0$ such that
+			\begin{align*}
+				M \cap B^{n+k}_\epsilon(p) \subset V
+			\end{align*}
+		\end{definition}
 		\begin{importantdefinition}{Tangent Vector}{}
 			Let $M \subset \bR^{n+k}$. Let $p \in M$. Then we call a vector $v \in \bR^{n+k}$ a \tit{tangent vector of $M$ at $p$} If there exists a map $\gamma : (-\delta, \delta) \to M$ such that $\gamma(0) = p$ and $D\gamma(0) = v$.
 		\end{importantdefinition}
 		\begin{importanttheorem}{Tangent Space}{}
-			Now, let $M$ be a manifold. Then the set of all tangent vectors of $M$ at $p$ forms an $n$-dimensional vector space, which we call the \tit{tangent space of $M$ at $p$} and which we denote $T_pM$.
+			Now, let $M$ be a manifold. Then the set of all tangent vectors of $M$ at $p$ forms an $n$-dimensional vector space, which we call the \tit{tangent space of $M$ at $p$} and which we denote $T_pM$. 
+			\newpar
+			In particular, given a local description of $M$ as the level set of a function $f : \bR^{n+k} \supset \Omega \to \bR^k$, then for $p \in M \cap \Omega$, we have
+			\begin{align*}
+				T_pM = \ker Df(p)
+			\end{align*}
 		\end{importanttheorem}
 		\clearpage
 		\section{Inverse Function Theorem}
@@ -1273,9 +1315,23 @@
 		\begin{theorem}
 			Every atomic algebra is a $\sigma$-algebra.
 		\end{theorem}
+		\begin{importanttheorem}{Induced $\sigma$-algebra}{}
+			Just like for Boolean algebras, the restriction $\cA|_Y$ of a $\sigma$-algebra $\cA$ on $X$ to a subset $Y \subset X$, defined by
+			\begin{align*}
+				\cA|_Y = \lr{A \cap Y \mid A \in \cA},
+			\end{align*}
+			is again a $\sigma$-algebra on $Y$.
+		\end{importanttheorem}
 		\begin{theorem}
-			Just like for Boolean algebras, the restriction $\cA|_Y$ of a $\sigma$-algebra $\cA$ on $X$ to a subset $Y \subset X$ is again a $\sigma$-algebra on $Y$.
+			We have $\cA|_Y \subset \cA$ if and only if $Y \in \cA$.
 		\end{theorem}
+		\begin{proof}
+			\phantom{}
+			\begin{enumerate}
+				\item Assume $\cA|_Y \subset \cA$. We have $X \cap Y = Y \in \cA|Y$, and thus we get $Y \in \cA$.
+				\item Assume $Y \in \cA$. Then since $\sigma$-algebras are closed under intersection, we have $A \cap Y \in \cA$ for all $A \in \cA$, i.e. we have $\cA|_Y \subset \cA$.
+			\end{enumerate}
+		\end{proof}
 		\begin{theorem}
 			Let $X \neq \emptyset$, let $(Y, \cB)$ be a measurable space and let $f : X \to Y$ be an arbitrary map. Then
 			\begin{align*}
@@ -1287,7 +1343,7 @@
 		\begin{theorem}
 			The intersection of arbitrarily many $\sigma$-algebras is on the same set $X$ is once again a $\sigma$-algebra.
 		\end{theorem}
-		\begin{importantcorollary}{Induced $\sigma$-Algebra}{}
+		\begin{importantcorollary}{Generated $\sigma$-algebra}{}
 			Let $\cE \subset \cP(X)$. Then $\angles{\cE}_\sigma$ denotes the intersection of all $\sigma$-algebras containing $\cE$.
 		\end{importantcorollary}
 		In particular, note that if $\cA$ is a $\sigma$-Algebra containing $\cE$, we have
@@ -1418,7 +1474,7 @@
 		\section{Measures}
 		With our different subset systems in place, we can finally give a general formal definition of a measure. Along the way, we will encounter outer measures, contents, and premeasures, which are "weakened" measures that we can use to generate proper ones.
 		
-		\begin{importantdefinition}{Outer Measure}{}
+		\begin{importantdefinition}{Outer measure}{}
 			Let $X$ be a set and $\mu$ be a function $\cP(X) \to [0,\infty]$. We call $\mu$ an \tbf{outer measure on $X$} if it is $\sigma$-subadditive.
 		\end{importantdefinition}
 		\begin{theorem}
@@ -1435,7 +1491,7 @@
 			\end{align*}
 			is an outer measure on $X$, which is known as the \tbf{Dirac measure}.
 		\end{theorem}
-		\begin{importanttheorem}{Counting Measure}{}
+		\begin{importanttheorem}{Counting measure}{}
 			Let $X$ be any set. Let $A \subset X$. Then the function
 			\begin{align*}
 				\card(A) := 
@@ -1446,7 +1502,7 @@
 			\end{align*}
 			is an outer measure on $X$, which is known as the \tbf{counting measure}.
 		\end{importanttheorem}
-		\begin{importantdefinition}{Measurable Set}{}
+		\begin{importantdefinition}{Measurable set}{}
 			Let $\mu$ be an outer measure on a set $X$. Then we call a subset $A \subset X$ \tbf{$\mu$-measurable}, or just \tbf{measurable}, if for all $S \subseteq X$ we have
 			\begin{align*}
 				\mu(S) = \mu(S \cap A) + \mu(S \setminus A)
@@ -1476,6 +1532,74 @@
 			Let $\cS$ be a \ul{set semiring.} Then we call a \ul{finitely additive} function $\cS \to [0,\infty]$ a \tbf{content}, and a \ul{$\sigma$-additive} function $\cS \to [0,\infty]$ a \tbf{premeasure}.
 		\end{importantdefinition}
 		In effect, a premeasure is a measure whose domain might not be as big as it could be. Every measure is trivially also a content and a premeasure, and every measure defined on $\cP(X)$ is an outer measure.
+		\begin{importanttheorem}{Restriction of a measure}{}
+			Let $(X, \cA, \mu)$ be a measure space. Let $Y \in \cA$. Then if we define
+			\begin{align*}
+				\mu|_Y(A \cap M) := \mu(A \cap M),
+			\end{align*}
+			$\mu|_Y$ defines a measure on $\cA|_Y$.¸
+		\end{importanttheorem}
+		\begin{importanttheorem}{Image measure}{}
+			Let $X,Y$ be sets. Let $f : X \to Y$ be a function. Let $\mu$ be an outer measure on $X$. then the function
+			\begin{align*}
+				f(\mu) : \cP(X) &\to [0, \infty]\\
+				f(\mu)(B) &= \mu\lr(f^{-1}(B))
+			\end{align*}
+			is a measure on $Y$, which is known as the \tbf{image measure of $\mu$ under $f$}.
+		\end{importanttheorem}
+		\begin{proof}
+			\begin{enumerate}
+				\item First, note that we have:
+				\begin{align*}
+					f(\mu)(\emptyset) 
+					&= \mu\lr(f^{-1}(\emptyset))\\
+					&= \mu(\emptyset)\\
+					&= 0
+				\end{align*}
+				\item Furthermore, for $B \subset \bigcup_{i \in \bN} B_i$, we have $f^{-1}(B) \subset \bigcup_{i \in \bN} B_i$. By the subadditivity of $\mu$, we get:
+				\begin{align*}
+					f(\mu)(B) &= \mu(f^{-1}(B))\\
+					&\leq \sum_{i \in \bN} \mu(f^{-1}(B_i))\\
+					&= \sum_{i \in \bN} f(\mu)(B_i).
+				\end{align*}
+				Therefore, $f(\mu)$ is also subadditive and thus an outer measure.¸
+			\end{enumerate}
+		\end{proof}
+		\begin{lemma}
+			Let $X,Y$ be sets. Let $f : X \to Y$ be a function. Let $\mu$ be an outer measure on $X$ and let $f(\mu)$ be the corresponding image measure.
+			Then $B \subset Y$ is $f(\mu)$ measurable if $f^{-1}(B)$ is $\mu$-measurable.
+		\end{lemma}
+		\begin{proof}
+			By the definition of measurability:
+			\begin{enumerate}
+				
+				\item $B \subset Y$ is $f(\mu)$-measurable if and only if for all $T \subset Y$, we have:
+					\begin{align*}
+						f(\mu)(T) 
+						&\geq 
+						f(\mu)(T \cap B) + f(\mu)(T \setminus B)
+					\end{align*}
+					i.e.
+					\begin{align*}
+					\mu\lr(f^{-1}(T))
+					&\geq 
+					\mu\lr(f^{-1}(T \cap B)) + \mu(f^{-1}(T \setminus B))	
+					\end{align*}
+					Since $f^{-1}(T \cap B) = f^{-1}(T) \cap f^{-1}(B)$ and $f^{-1}(T \setminus B) = f^{-1}(T) \setminus f^{-1}(B)$, this is equivalent to:
+					\begin{align*}
+						\mu\lr(f^{-1}(T))
+						&\geq 
+						\mu(f^{-1}(T) \cap f^{-1}(B))
+						+
+						\mu(f^{-1}(T) \setminus f^{-1}(B))
+					\end{align*}
+				\item $f^{-1}(B)$ is $\mu$-measurable if and only if for all $S \subset X$, we have:
+					\begin{align*}
+						\mu(S) \geq \mu(S \cap f^{-1}(B)) + \mu(S \setminus f^{-1}(B)).
+					\end{align*} 
+					In particular, if $f^{-1}(B)$ is $\mu$-measurable, this equation must hold for $S = f^{-1}(T)$, implying that $B$ is $f(\mu)$-measurable.
+			\end{enumerate}
+		\end{proof}
 		\begin{importantdefinition}{($\sigma$)-finite measure}{}
 			Let $(X, \cA, \mu)$ be a measure space. Then:
 			\begin{enumerate}
@@ -3761,9 +3885,9 @@
 		\begin{proof}
 			We have
 			\begin{align*}
-				Df = 
+				Df(x,y) = 
 				\begin{pmatrix}
-					\pdv{x} f(x,y) & \pdv{y} f
+					\pdv{x} f(x,y) & \pdv{y} f(x,y)
 				\end{pmatrix},
 			\end{align*}
 			therefore our Gram matrix is
